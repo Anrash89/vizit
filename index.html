@@ -1,177 +1,200 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>СУП-ЦИВИЛИЗАЦИЯ — стратегия в холодильнике</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>GREKO — Суповый кликер в ресторане</title>
 <style>
   :root{
-    --bg1:#0b1220; --bg2:#0e1b33; --card:#131e35cc; --cardSolid:#141e33;
-    --accent:#7cf0ff; --accent2:#8cff9a; --warn:#ff9b7c; --danger:#ff5370;
-    --ok:#38d996; --muted:#9fb0d0; --line:#203253; --glow:0 0 18px rgba(124,240,255,.35);
+    --bg1:#071428; --bg2:#0b1f3f;
+    --card:#0e1f3d; --line:#274170;
+    --ink:#eaf2ff; --muted:#9fb3d8;
+    --accent:#73f0ff; --accent2:#9affb1; --gold:#ffd36d;
+    --ok:#32d39c; --warn:#ff9b7c; --danger:#ff5670;
   }
   *{box-sizing:border-box}
   html,body{height:100%}
   body{
-    margin:0; font:16px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial;
-    color:#e8f2ff; background: radial-gradient(1200px 700px at 70% -10%, #1a335c 0%, transparent 60%),
-                          radial-gradient(900px 500px at -10% 30%, #152a4e 0%, transparent 60%),
-                          linear-gradient(180deg,var(--bg1),var(--bg2));
-    background-attachment: fixed;
+    margin:0; color:var(--ink); font:16px/1.45 system-ui,Segoe UI,Roboto,Arial;
+    background:
+      radial-gradient(1200px 700px at 70% -10%, #19335e 0%, transparent 60%),
+      radial-gradient(900px 500px at -10% 30%, #132a4f 0%, transparent 60%),
+      linear-gradient(180deg,var(--bg1),var(--bg2));
+    background-attachment:fixed;
+    overflow-x:hidden;
   }
   header{
-    display:flex; gap:16px; align-items:center; justify-content:space-between;
-    padding:18px 18px 10px; border-bottom:1px solid var(--line);
-    backdrop-filter:saturate(130%) blur(2px)
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    padding:14px 16px; border-bottom:1px solid var(--line);
   }
-  .title{display:flex;gap:12px;align-items:center}
-  .logo{
-    width:40px;height:40px;border-radius:12px;background:
-      radial-gradient(circle at 40% 40%, #ffd36d 0 38%, #b65c00 40% 46%, transparent 47%),
-      conic-gradient(from 0deg, #ffaa00, #ff7b00, #ff4d00, #ffaa00);
-    box-shadow: var(--glow),0 4px 14px #0008;border:1px solid #ffb13f66
+  .title{display:flex; gap:12px; align-items:center}
+  .logo{width:46px;height:46px;border-radius:12px;
+    background:
+      radial-gradient(circle at 35% 35%, #ffd36d 0 40%, #b65c00 42% 48%, transparent 50%),
+      conic-gradient(#ffaa00,#ff7b00,#ff4d00,#ffaa00);
+    box-shadow:0 0 22px rgba(255,209,109,.35), 0 6px 18px #0008; border:1px solid #ffb13f66;
   }
-  .title h1{margin:0;font-size:18px;letter-spacing:.3px}
-  .sub{color:var(--muted);font-size:13px}
+  h1{margin:0;font-size:18px;letter-spacing:.3px}
+  .sub{font-size:12px;color:var(--muted)}
   .wrap{max-width:1100px;margin:0 auto;padding:16px}
-  .grid{display:grid;grid-template-columns:1.2fr 1fr;gap:16px}
-  .card{
-    background:var(--card); border:1px solid var(--line); border-radius:16px; padding:14px;
-    box-shadow:0 6px 24px #0007
-  }
-  h2{margin:0 0 10px;font-size:16px;letter-spacing:.2px}
+  .grid{display:grid;grid-template-columns:1.1fr 1fr;gap:16px}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:16px; padding:14px; box-shadow:0 8px 28px #0007}
+  h2{margin:0 0 8px;font-size:16px}
   .stats{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
-  .pill{
-    background:linear-gradient(180deg,#0f1a31,#0a1426); border:1px solid var(--line);
-    border-radius:12px;padding:10px;min-height:62px
-  }
-  .pill .cap{font-size:12px;color:var(--muted)}
-  .pill .val{font-weight:700;font-size:18px;margin-top:2px}
-  .row{display:flex; gap:8px; flex-wrap:wrap}
+  .pill{background:linear-gradient(180deg,#0f1f3e,#0b1730); border:1px solid var(--line); border-radius:12px; padding:10px}
+  .cap{font-size:12px;color:var(--muted)}
+  .val{font-weight:800;font-size:18px;margin-top:2px}
+  .hint{color:var(--muted);font-size:12px}
+  .bar{height:12px;background:#0b1730;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+  .bar > i{display:block;height:100%; background:linear-gradient(90deg,var(--accent),#58ffa3)}
+  .bar.warn > i{background:linear-gradient(90deg,#ffb37b,#ff6b6b)}
+  .row{display:flex;gap:8px;flex-wrap:wrap}
   button{
-    cursor:pointer; border:1px solid var(--line); background:#0d1830; color:#eaf6ff;
-    padding:10px 12px; border-radius:12px; font-weight:600; transition:.15s transform, .15s background, .15s opacity;
+    cursor:pointer;border:1px solid var(--line);background:#0d1830;color:var(--ink);
+    padding:10px 12px;border-radius:12px;font-weight:700;transition:.15s transform,.15s opacity,.15s filter;
     box-shadow:0 2px 10px #0006
   }
   button:hover{transform:translateY(-1px)}
-  button:disabled{opacity:.5; cursor:not-allowed; transform:none}
+  button:disabled{opacity:.55;cursor:not-allowed;transform:none}
   .btn-acc{background:#0c2232;border-color:#1c405a}
   .btn-warn{background:#2c1620;border-color:#5a2942}
   .btn-ok{background:#11281f;border-color:#2f5a41}
-  .cost{font-weight:600;color:var(--muted);font-size:12px;margin-left:6px}
-  .bar{height:12px;background:#0a1326;border:1px solid var(--line); border-radius:999px; overflow:hidden}
-  .bar > i{display:block;height:100%; background:linear-gradient(90deg, var(--accent), #58ffa3)}
-  .bar.warn > i{background:linear-gradient(90deg, #ffb37b, #ff6b6b)}
-  .bar.ok > i{background:linear-gradient(90deg, #61ffa9, #9cf6ff)}
-  .kv{display:grid;grid-template-columns:1fr 1fr; gap:8px}
-  .hint{color:var(--muted);font-size:12px}
-  .list{display:grid; gap:8px}
-  .upgrade{
-    border:1px dashed #2a3c63; border-radius:12px;padding:10px; display:flex; gap:10px; align-items:center; justify-content:space-between
+  .cost{font-weight:700;color:var(--muted);font-size:12px;margin-left:6px}
+
+  /* Неоновая вывеска GREKO */
+  .neon{
+    text-shadow:
+      0 0 6px rgba(115,240,255,.8),
+      0 0 18px rgba(115,240,255,.6),
+      0 0 36px rgba(115,240,255,.4);
+    color:var(--accent);
+    letter-spacing:2px;
+    animation:glow 3s ease-in-out infinite;
+    font-weight:900;
   }
-  .upgrade.locked{opacity:.6;filter:saturate(.7)}
-  .log{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:13px; white-space:pre-line; max-height:220px; overflow:auto; padding:10px; border:1px solid var(--line); border-radius:12px;background:#0a1426}
-  .topbars{display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin:12px 0 6px}
-  .flex{display:flex; gap:8px; align-items:center; flex-wrap:wrap}
-  .right .card{height:100%}
-  .footer{padding:10px 18px 30px; color:#8aa0c7; font-size:12px; text-align:center}
-  .kbd{border:1px solid #2b3e65;border-radius:6px;padding:.5px 6px;background:#0b1730}
-  /* modal */
-  .modal{position:fixed;inset:0;display:none;place-items:center;background:rgba(6,10,20,.65);backdrop-filter:blur(3px)}
-  .modal .box{max-width:560px;background:var(--cardSolid);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 12px 40px #000a}
-  .box h3{margin:.2rem 0 .4rem}
-  .box p{color:#cfe2ff}
-  .split{display:flex; gap:10px; flex-wrap:wrap}
+  @keyframes glow{
+    0%,100%{filter:drop-shadow(0 0 0 rgba(115,240,255,.5))}
+    50%{filter:drop-shadow(0 0 12px rgba(115,240,255,.7))}
+  }
+
+  /* Сцена кухни: кастрюля с пузырьками и паром */
+  .kitchen{
+    position:relative; height:280px; border:1px dashed #2a3f69; border-radius:14px; overflow:hidden;
+    background:
+      radial-gradient(300px 120px at 50% 110%, #0b1a33 0, transparent 70%),
+      linear-gradient(#0b1f3d,#0b1a33);
+  }
+  .pot{
+    position:absolute; left:50%; bottom:22px; width:320px; height:140px; transform:translateX(-50%);
+    border-radius:22px 22px 34px 34px; background:linear-gradient(180deg,#1a2f55,#0f1d3a);
+    border:2px solid #2b4a82; box-shadow:inset 0 -12px 30px #0008, 0 10px 20px #0009;
+  }
+  .pot:before{
+    content:''; position:absolute; left:-10px; right:-10px; top:-14px; height:22px; border-radius:18px;
+    background:linear-gradient(180deg,#203c6e,#102547); border:2px solid #2b4a82;
+  }
+  .steam{
+    position:absolute; left:50%; bottom:180px; width:200px; height:150px; transform:translateX(-50%);
+    pointer-events:none;
+    background:
+      radial-gradient(60px 40px at 50% 100%, rgba(255,255,255,.15), transparent 60%),
+      radial-gradient(70px 50px at 30% 100%, rgba(255,255,255,.12), transparent 60%),
+      radial-gradient(70px 50px at 70% 100%, rgba(255,255,255,.12), transparent 60%);
+    animation:steam 3.6s ease-in-out infinite;
+    filter:blur(1px);
+  }
+  @keyframes steam{
+    0%{transform:translate(-50%,0) scale(1);opacity:.6}
+    100%{transform:translate(-50%,-40px) scale(1.2);opacity:.05}
+  }
+  .bubble{
+    position:absolute; bottom:40px; left:50%; width:10px; height:10px; border-radius:50%;
+    background:radial-gradient(circle at 30% 30%, #bff 0,#69a 50%,#235 80%);
+    opacity:.9; animation:rise 2.4s ease-out infinite;
+  }
+  @keyframes rise{
+    0%{transform:translate(-50%,0) scale(.8);opacity:.0}
+    10%{opacity:.9}
+    100%{transform:translate(calc(-50% + var(--x,0px)),-110px) scale(1.4);opacity:0}
+  }
+  .shake{animation:shake .3s linear 1}
+  @keyframes shake{
+    0%,100%{transform:translateX(0)}
+    20%{transform:translateX(-3px)}
+    40%{transform:translateX(3px)}
+    60%{transform:translateX(-2px)}
+    80%{transform:translateX(2px)}
+  }
+  .toast{
+    position:fixed; left:50%; top:18px; transform:translateX(-50%);
+    background:#0b1830; border:1px solid var(--line); padding:10px 14px; border-radius:12px;
+    font-weight:700; box-shadow:0 10px 30px #0009; opacity:0; pointer-events:none;
+    transition:.3s opacity, .3s transform;
+  }
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(4px)}
+  .log{font-family:ui-monospace,Consolas,monospace;font-size:13px;white-space:pre-line;max-height:240px;overflow:auto;padding:10px;border:1px solid var(--line);border-radius:12px;background:#0a1426}
   .tag{padding:4px 8px;border:1px solid var(--line);border-radius:999px;font-size:12px;color:#c6d6f5}
-  .danger{color:#ff8e8e}
-  .win{color:#9fffd1}
-  a{color:#8bd0ff}
+  .right .card{height:100%}
+  .footer{padding:12px 0 28px;text-align:center;color:#8aa4cb;font-size:12px}
+  .kbd{border:1px solid #2b3e65;border-radius:6px;padding:.5px 6px;background:#0b1730}
+
+  /* модалка */
+  .modal{position:fixed;inset:0;display:none;place-items:center;background:rgba(6,10,20,.65);backdrop-filter:blur(3px)}
+  .box{max-width:560px;background:#0e1f3d;border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 16px 44px #000a}
+  .box h3{margin:.2rem 0 .4rem}
+  .win{color:#9fffd1} .danger{color:#ff8e8e}
 </style>
 </head>
 <body>
 <header>
   <div class="title">
-    <div class="logo" title="Тёплый круг — это ты, суп 🍲"></div>
+    <div class="logo"></div>
     <div>
-      <h1>СУП-ЦИВИЛИЗАЦИЯ 🍲 — развей разум до того, как тебя обнаружат</h1>
-      <div class="sub">Ты — кастрюля супа в холодильнике. Расти микромир, исследуй технологии и маскируй запах, пока люди не нашли тебя и не слили в унитаз.</div>
+      <h1 class="neon">GREKO • СУПОВЫЙ КЛИКЕР</h1>
+      <div class="sub">Ресторан GREKO: мы любим оливки, чеснок и сарказм. Кликаешь — мешаешь суп, растишь славу. Старайся не вонять так, чтобы нас закрыли.</div>
     </div>
   </div>
-  <div class="flex">
+  <div class="row">
     <button id="btn-pause" class="btn-acc">Пауза</button>
-    <div class="flex">
-      <span class="hint">Скорость:</span>
-      <button class="btn-acc" data-speed="1">1×</button>
-      <button class="btn-acc" data-speed="2">2×</button>
-      <button class="btn-acc" data-speed="4">4×</button>
-    </div>
-    <button id="btn-reset" class="btn-warn" title="Начать заново и очистить сохранение">Сброс</button>
+    <button id="btn-reset" class="btn-warn" title="Начать заново">Сброс</button>
   </div>
 </header>
 
 <div class="wrap">
   <div class="stats">
-    <div class="pill"><div class="cap">Питательные вещества</div><div class="val" id="st-nutrients">0</div><div class="hint" id="rate-nutrients">+0/с</div></div>
-    <div class="pill"><div class="cap">Популяция микробов</div><div class="val" id="st-pop">0</div><div class="hint" id="rate-pop">рост 0/с</div></div>
-    <div class="pill"><div class="cap">Мыслители</div><div class="val" id="st-thinkers">0</div><div class="hint" id="rate-research">наука +0/с</div></div>
-    <div class="pill"><div class="cap">Скрытность</div><div class="val" id="st-stealth">0</div><div class="hint">биоплёнки</div></div>
-    <div class="pill"><div class="cap">Запах</div><div class="val" id="st-smell">0%</div><div class="hint">чем выше — тем опаснее</div></div>
-    <div class="pill"><div class="cap">Риск обнаружения</div><div class="val" id="st-detect">0%</div><div class="hint">100% = слив в унитаз</div></div>
-  </div>
-
-  <div class="topbars">
-    <div>
-      <div class="hint">Интеллект цивилизации</div>
-      <div class="bar ok"><i id="bar-research" style="width:0%"></i></div>
-    </div>
-    <div>
-      <div class="hint">Запах (влияет на шанс быть найденными)</div>
-      <div class="bar warn"><i id="bar-smell" style="width:0%"></i></div>
-    </div>
-    <div>
-      <div class="hint">Риск обнаружения</div>
-      <div class="bar warn"><i id="bar-detect" style="width:0%"></i></div>
-    </div>
+    <div class="pill"><div class="cap">Бульон</div><div class="val" id="st-broth">0</div><div class="hint" id="rate-broth">+0/клик • +0/с</div></div>
+    <div class="pill"><div class="cap">Запах</div><div class="val" id="st-smell">0%</div><div class="bar warn"><i id="bar-smell" style="width:0%"></i></div></div>
+    <div class="pill"><div class="cap">Риск</div><div class="val" id="st-risk">0%</div><div class="bar warn"><i id="bar-risk" style="width:0%"></i></div></div>
+    <div class="pill"><div class="cap">Слава GREKO</div><div class="val" id="st-fame">0</div><div class="bar"><i id="bar-fame" style="width:0%"></i></div></div>
+    <div class="pill"><div class="cap">Апгрейды</div><div class="val" id="st-upg">0</div><div class="hint">Ещё больше бесполезной гордости</div></div>
+    <div class="pill"><div class="cap">События</div><div class="val" id="st-events">0</div><div class="hint">Случайности — наша специя</div></div>
   </div>
 
   <div class="grid">
     <div class="left">
       <div class="card">
-        <h2>Производство в кастрюле</h2>
-        <div class="row">
-          <button id="buy-microbe" class="btn-ok" title="Создать микробов — они перерабатывают суп в питательные вещества">
-            Засеять микробов +1 <span class="cost" id="c-microbe"></span>
-          </button>
-          <button id="buy-thinker" class="btn-acc" title="Эволюционировать часть популяции в мыслителей — они генерируют науку">
-            Эволюция мыслителя +1 <span class="cost" id="c-thinker"></span>
-          </button>
-          <button id="build-biofilm" class="btn-acc" title="Биоплёнка прячет запах и снижает рост риска">
-            Построить биокупол +1 <span class="cost" id="c-biofilm"></span>
-          </button>
-          <button id="toggle-enzymes" class="btn-warn" title="Короткий буст производства, но пахнет сильнее">
-            ЭНЗИМЫ: выкл
-          </button>
+        <h2>Кухня GREKO</h2>
+        <div class="kitchen" id="stage">
+          <div class="steam"></div>
+          <div class="pot" id="pot"></div>
+          <!-- пузырьки генерятся скриптом -->
         </div>
-        <div class="kv" style="margin-top:10px">
-          <div class="pill">
-            <div class="cap">Бонусы</div>
-            <div class="hint" id="bonuses">нет</div>
-          </div>
-          <div class="pill">
-            <div class="cap">События холодильника</div>
-            <div class="hint">Дверца иногда открывается… будь готов.</div>
-          </div>
+        <div class="row" style="margin-top:12px">
+          <button id="btn-stir" class="btn-ok" style="font-size:18px">🥄 Помешать суп</button>
+          <button id="btn-enz" class="btn-acc" title="Короткий буст, но запах вырастет">Энзимная раскачка: выкл</button>
+          <span class="tag">Скорость: <b id="speedLabel">1×</b></span>
+          <button class="btn-acc" data-speed="1">1×</button>
+          <button class="btn-acc" data-speed="2">2×</button>
+          <button class="btn-acc" data-speed="4">4×</button>
         </div>
       </div>
 
       <div class="card">
-        <h2>Исследования и победа</h2>
-        <div class="list" id="upgrades"></div>
+        <h2>Апгрейды (дёшево и сердито)</h2>
+        <div id="upg" class="row" style="gap:10px;flex-wrap:wrap"></div>
+        <div class="hint" style="margin-top:6px">Победа: накопи <b>100</b> Славы и нажми «Провозгласить Греческий Разум».</div>
         <div class="row" style="margin-top:8px">
-          <button id="btn-win" class="btn-ok" disabled title="Достигни нужного интеллекта">Провозгласить Разум и спастись</button>
-        </div>
-        <div class="hint" style="margin-top:6px">
-          Победа: набери <b id="need-intel">200</b> интеллекта и нажми кнопку «Провозгласить Разум».
+          <button id="btn-win" class="btn-ok" disabled>Провозгласить Греческий Разум 🧠</button>
         </div>
       </div>
 
@@ -183,440 +206,298 @@
 
     <div class="right">
       <div class="card">
-        <h2>Мир супа — показатели</h2>
-        <div class="kv">
-          <div>
-            <div class="hint">Интеллект</div>
-            <div class="bar ok"><i id="intel" style="width:0%"></i></div>
-          </div>
-          <div>
-            <div class="hint">Температурный фон (холодильник)</div>
-            <div class="bar"><i id="heat" style="width:0%"></i></div>
-          </div>
-        </div>
-        <div style="margin-top:10px" class="hint">
-          Совет: сначала разгоняй <b>микробов</b> и <b>питательные вещества</b>, затем переходи в <b>мыслителей</b> и строй <b>биокупола</b>, чтобы держать запах ниже. Следи за дверцей холодильника!
-        </div>
-        <hr style="border-color:#20325344;margin:14px 0">
-        <div class="split">
+        <h2>Ситуации в ресторане</h2>
+        <div class="row">
           <span class="tag">Автосохранение: <b id="saveLabel">вкл</b></span>
           <span class="tag">Год супа: <b id="year">0</b></span>
-          <span class="tag">Открытий двери: <b id="doors">0</b></span>
+          <span class="tag">Открытий холодильника: <b id="doors">0</b></span>
         </div>
+        <p class="hint" style="margin-top:6px">
+          Смешные случайности сами всплывают: инспектор, кот Сократ, «час чеснока», отключение света, официант уронил ложку, бармен подлил узо. Иногда это хорошо. Иногда — увольнение.
+        </p>
+        <h2 style="margin-top:12px">Новости дня</h2>
+        <div id="news" class="hint">Пока тихо… подозрительно тихо.</div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="footer">© Суп-цивилизация. Сделано с любовью к странным стратегиям. Поддерживает сохранение в браузере.</div>
+<div class="toast" id="toast">+1 бульон</div>
 
-<!-- Модальные окна для победы/поражения -->
-<div id="modal" class="modal" role="dialog" aria-modal="true">
+<div id="modal" class="modal">
   <div class="box">
-    <h3 id="modal-title">Заголовок</h3>
-    <p id="modal-text">Текст</p>
+    <h3 id="m-title">Заголовок</h3>
+    <p id="m-text">Текст</p>
     <div class="row">
-      <button id="modal-close" class="btn-acc">Продолжить</button>
-      <button id="modal-reset" class="btn-warn">Сыграть заново</button>
+      <button id="m-continue" class="btn-acc">Продолжить</button>
+      <button id="m-reset" class="btn-warn">Сыграть заново</button>
     </div>
   </div>
 </div>
 
-<script>
-/* =============================
-   СУП-ЦИВИЛИЗАЦИЯ — игровой цикл
-   ============================= */
-const UPGRADE_DEFS = [
-  { id:'mask', name:'Маскирующие ароматы', cost:50,
-    desc:'Запах накапливается на 30% медленнее.',
-    apply:s => s.mod.smellMul*=0.70 },
-  { id:'cold', name:'Холодная адаптация', cost:40,
-    desc:'Микробы работают лучше в холоде: +20% к питательным веществам.',
-    apply:s => s.mod.nutrMul*=1.20 },
-  { id:'door', name:'Шёпот дверцы', cost:60,
-    desc:'Открытие холодильника повышает риск в 2 раза меньше.',
-    apply:s => s.mod.doorFactor*=0.5 },
-  { id:'bio2', name:'Укреплённые биокупола', cost:80,
-    desc:'Каждый биокупол сильнее: -20% к приросту запаха.',
-    apply:s => s.mod.biofilmBonus+=0.20 },
-  { id:'think', name:'Коллективный разум', cost:100,
-    desc:'Мыслители генерируют науку на 30% быстрее.',
-    apply:s => s.mod.scienceMul*=1.30 },
-  { id:'enzyme', name:'Чистые ферменты', cost:75,
-    desc:'Энзим-режим даёт +70% производства (вместо +50%) и меньше пахнет.',
-    apply:s => { s.mod.enzProd=1.70; s.mod.enzSmell=1.20 } },
-  { id:'perfume', name:'Парфюмерия из рассола', cost:120,
-    desc:'Запах частично превращается в питательные вещества.',
-    apply:s => s.mod.smellToNutri=true },
-  { id:'quantum', name:'Квантовый бульон', cost:140,
-    desc:'Небольшой шанс при открытии двери уменьшить риск вместо увеличения.',
-    apply:s => s.mod.quantumDoor=true },
-];
+<div class="footer">© GREKO. Если пахнет — это аутентично. Если слишком пахнет — это не мы.</div>
 
-const WIN_INTEL = 200;
+<script>
+/* ====== Простая модель кликера ====== */
+const WIN_FAME = 100;
 
 const S = {
-  time:0, year:0,
-  nutrients: 15,
-  microbes: 0,
-  thinkers: 0,
-  biofilms: 0,
-  research: 0, // интеллект
-  smell: 0, // 0..100
-  detect: 0, // 0..100
-  heat: 25, // условная шкала 0..100 (в холодильнике холодно -> низко)
+  t:0, year:0, speed:1,
+  broth: 0,       // валюта
+  perClick: 1,    // сколько с клика
+  auto: 0,        // авто-доход в сек
+  smell: 0,       // 0..100
+  risk: 0,        // 0..100
+  fame: 0,        // прогресс к победе
   doors: 0,
-  speed: 1,
-  enzymes:false, enzymesTimer:0,
+  enzymes:false, enzTimer:0,
   upgrades:{},
-  mod:{
-    nutrMul:1, scienceMul:1, smellMul:1,
-    doorFactor:1, biofilmBonus:0, enzProd:1.5, enzSmell:1.4,
-    smellToNutri:false, quantumDoor:false
-  }
+  events:0
 };
 
-// цены
-const COST = {
-  microbeBase: 5,
-  thinkerNutri: 10,
-  thinkerPop: 2,
-  biofilmNutri: 20,
-  biofilmPop: 5
+const UPG = [
+  {id:'olive',  name:'Добавить оливковое масло',     cost:20,  desc:'+1 к бульону за клик. Пахнет культурнее.', apply:()=>S.perClick+=1},
+  {id:'garlic', name:'Час чеснока',                  cost:35,  desc:'+0.5 авто/с, но запах растёт быстрее.',   apply:()=>{S.auto+=0.5; g.mod.smellMul*=1.15}},
+  {id:'lazy',   name:'Нанять повара-ленивца',        cost:60,  desc:'+1 авто/с, иногда роняет ложку.',          apply:()=>{S.auto+=1; g.mod.dropSpoon=true}},
+  {id:'bio',    name:'Биокупол на кастрюлю',         cost:80,  desc:'Запах медленнее на 20%.',                  apply:()=>g.mod.smellMul*=0.8},
+  {id:'rebrand',name:'Переименовать суп в «Дзадзики»',cost:90, desc:'Риск от инспектора падает сильнее.',        apply:()=>g.mod.inspector*=0.6},
+  {id:'uzou',   name:'Бармен подливает узо',         cost:110, desc:'+2 авто/с, но персонал шутит громче.',     apply:()=>S.auto+=2},
+  {id:'perf',   name:'Парфюм из рассола',            cost:130, desc:'Часть запаха превращается в бульон.',      apply:()=>g.mod.smellToBroth=true},
+];
+
+const g = { // модификаторы и таймеры событий
+  mod:{smellMul:1, inspector:1, smellToBroth:false, dropSpoon:false},
+  doorTimer:0, randTimer:0
 };
 
-function format(n){
-  if (n>=1e6) return (n/1e6).toFixed(2)+'м';
-  if (n>=1e3) return (n/1e3).toFixed(2)+'к';
-  return Math.floor(n).toString();
-}
-function clamp(n,min,max){ return Math.min(max,Math.max(min,n)); }
+function f(n){ return n>=1e6? (n/1e6).toFixed(2)+'м' : n>=1e3? (n/1e3).toFixed(2)+'к' : Math.floor(n); }
+function clamp(n,a,b){return Math.max(a,Math.min(b,n));}
 
 const ui = {
   n: id=>document.getElementById(id),
-  btnsSpeed: Array.from(document.querySelectorAll('[data-speed]')),
-  upgrades: document.getElementById('upgrades'),
+  stage: document.getElementById('stage'),
+  pot: document.getElementById('pot'),
+  toast: document.getElementById('toast'),
+  upg: document.getElementById('upg'),
   log: document.getElementById('log'),
+  news: document.getElementById('news'),
   modal: document.getElementById('modal'),
-  modalTitle: document.getElementById('modal-title'),
-  modalText: document.getElementById('modal-text'),
-  modalClose: document.getElementById('modal-close'),
-  modalReset: document.getElementById('modal-reset')
+  mt: document.getElementById('m-title'),
+  mx: document.getElementById('m-text')
 };
 
-function log(msg){
-  const t = `[${(S.time/1000).toFixed(0)}с] ${msg}`;
-  ui.log.textContent = t + '\n' + ui.log.textContent;
-}
-
-function microbeCost(){
-  // простая возрастающая цена: base * (1.08 ^ microbes)
-  return Math.ceil(COST.microbeBase * Math.pow(1.08, S.microbes));
-}
-
-function refreshUI(){
-  ui.n('st-nutrients').textContent = format(S.nutrients);
-  ui.n('st-pop').textContent = format(S.microbes);
-  ui.n('st-thinkers').textContent = format(S.thinkers);
-  ui.n('st-stealth').textContent = format(S.biofilms);
-  ui.n('st-smell').textContent = Math.round(S.smell) + '%';
-  ui.n('st-detect').textContent = Math.round(S.detect) + '%';
-  ui.n('bar-smell').style.width = clamp(S.smell,0,100)+'%';
-  ui.n('bar-detect').style.width = clamp(S.detect,0,100)+'%';
-  const intelPct = clamp((S.research/WIN_INTEL)*100,0,100);
-  ui.n('bar-research').style.width = intelPct+'%';
-  ui.n('intel').style.width = intelPct+'%';
-  ui.n('heat').style.width = clamp(S.heat,0,100)+'%';
-  ui.n('year').textContent = S.year;
-  ui.n('doors').textContent = S.doors;
-  ui.n('need-intel').textContent = WIN_INTEL;
-
-  // Rates (приблизительно в секунду при текущих модификаторах)
-  const prod = productionPerSec();
-  ui.n('rate-nutrients').textContent = `+${prod.nutrients.toFixed(1)}/с`;
-  ui.n('rate-pop').textContent = `рост ${(prod.popGrowth>=0?'+':'')}${prod.popGrowth.toFixed(2)}/с`;
-  ui.n('rate-research').textContent = `+${prod.research.toFixed(2)}/с`;
-
-  ui.n('c-microbe').textContent = `💧 ${microbeCost()}`;
-  ui.n('c-thinker').textContent = `💧 ${COST.thinkerNutri} + 👾 ${COST.thinkerPop}`;
-  ui.n('c-biofilm').textContent = `💧 ${COST.biofilmNutri} + 👾 ${COST.biofilmPop}`;
-  ui.n('toggle-enzymes').textContent = `ЭНЗИМЫ: ${S.enzymes?'вкл':'выкл'}${S.enzymes?` (${Math.ceil(S.enzymesTimer/1000)}с)`:''}`;
-
-  // Кнопка победы
-  ui.n('btn-win').disabled = S.research < WIN_INTEL || S.detect>=100;
-
-  // Бонусы
-  const bs=[];
-  if(S.enzymes) bs.push('ферменты активны');
-  if(S.upgrades.mask) bs.push('маскирующие ароматы');
-  if(S.upgrades.bio2) bs.push('усиленные купола');
-  if(S.upgrades.perfume) bs.push('парфюмерия из рассола');
-  ui.n('bonuses').textContent = bs.length? bs.join(', '): 'нет';
-}
+function log(t){ ui.log.textContent = '• '+t+'\n' + ui.log.textContent; ui.news.textContent = t; }
 
 function drawUpgrades(){
-  ui.upgrades.innerHTML = '';
-  for(const u of UPGRADE_DEFS){
+  ui.upg.innerHTML='';
+  UPG.forEach(u=>{
     const have = !!S.upgrades[u.id];
-    const can = S.research >= u.cost && !have;
-    const el = document.createElement('div');
-    el.className = 'upgrade' + (have?'':' locked');
-    el.innerHTML = `
-      <div>
-        <div><b>${u.name}</b> ${have? '— изучено ✅' : ''}</div>
-        <div class="hint">${u.desc}</div>
-      </div>
-      <div>
-        <button ${have?'disabled':''} data-up="${u.id}" class="btn-acc">${have?'Куплено':'Купить'} — 🧪 ${u.cost}</button>
-      </div>
-    `;
-    const btn = el.querySelector('button');
-    if(!have){
-      btn.disabled = !can;
-      btn.title = can? 'Исследовать' : 'Недостаточно интеллекта';
-      btn.addEventListener('click',()=>{
-        if(S.research>=u.cost && !S.upgrades[u.id]){
-          S.research -= u.cost;
-          S.upgrades[u.id] = true;
-          u.apply(S);
-          log(`Исследование "${u.name}" завершено.`);
-          drawUpgrades();
-          refreshUI();
-          save();
-        }
-      })
-    }
-    ui.upgrades.appendChild(el);
-  }
+    const btn = document.createElement('button');
+    btn.className='btn-acc';
+    btn.innerHTML = `${u.name} <span class="cost">🍲 ${u.cost}</span>`;
+    btn.disabled = have || S.broth<u.cost;
+    btn.title = u.desc;
+    btn.addEventListener('click',()=>{
+      if (S.broth>=u.cost && !S.upgrades[u.id]){
+        S.broth-=u.cost; S.upgrades[u.id]=true; u.apply(); S.fame+=5;
+        document.getElementById('st-upg').textContent = Object.keys(S.upgrades).length;
+        log(`Апгрейд: ${u.name}. ${u.desc}`);
+        refresh();
+        save();
+      }
+    });
+    if (have){ btn.disabled=true; btn.style.opacity=.6; btn.textContent=u.name+' — ✔'; }
+    ui.upg.appendChild(btn);
+  });
 }
 
-/* Производство/формулы */
-function productionPerSec(){
-  // базовые коэффициенты
-  const pop = S.microbes;
-  const think = S.thinkers;
-  const bio = S.biofilms;
-
-  let nutrRate = pop * 0.6;         // питательные вещества в секунду
-  let researchRate = think * 0.5;   // наука
-  let smellRate = (pop*0.02 + think*0.01); // запах
-
-  // модификаторы
-  nutrRate *= S.mod.nutrMul;
-  researchRate *= S.mod.scienceMul;
-
-  // биокупола уменьшают запах
-  smellRate *= (1 - Math.min(0.85, bio * (0.07 + S.mod.biofilmBonus)));
-  smellRate *= S.mod.smellMul;
-
-  // ферменты
-  if (S.enzymes){ nutrRate *= S.mod.enzProd; smellRate *= S.mod.enzSmell; }
-
-  // лёгкий естественный рост популяции, но после 200 — насыщение
-  let popGrowth = Math.max(0, 0.02 * (1 - Math.min(1, pop/200)));
-
-  return {nutrients:nutrRate, research:researchRate, smell:smellRate, popGrowth};
+/* Бульон/клик */
+function stir(){
+  const gain = S.perClick;
+  S.broth += gain;
+  S.smell = clamp(S.smell + 0.6, 0, 100);
+  popToast(`+${gain} бульон`);
+  ui.pot.classList.add('shake'); setTimeout(()=>ui.pot.classList.remove('shake'),300);
+  spawnBubble();
+  refresh();
 }
 
-function tick(dt){
-  if (S.detect>=100) return; // конец игры
-  S.time += dt * S.speed;
-
-  // каждые "годы супа"
-  if (Math.floor(S.time/10000) > S.year){
-    S.year++;
-  }
-
-  // периодические события — открытие двери
-  maybeOpenDoor(dt);
-
-  // ферменты таймер
-  if (S.enzymes){
-    S.enzymesTimer -= dt*S.speed;
-    if (S.enzymesTimer<=0){ S.enzymes=false; log('Энзимы выдохлись.'); }
-  }
-
-  const prod = productionPerSec();
-  S.nutrients += prod.nutrients * dt/1000;
-  S.research  += prod.research  * dt/1000;
-  S.smell     = clamp(S.smell + prod.smell * dt/1000, 0, 100);
-  S.microbes  += prod.popGrowth * dt/1000;
-
-  // риск обнаружения медленно растёт от запаха
-  S.detect = clamp(S.detect + (S.smell*0.012) * dt/1000, 0, 100);
-
-  // бонус "парфюмерия": часть запаха в еду
-  if (S.mod.smellToNutri && S.smell>5){
-    const siphon = 0.0025 * S.smell * dt/1000;
-    S.smell = Math.max(0, S.smell - siphon);
-    S.nutrients += siphon*2;
-  }
-
-  // победа доступна по порогу интеллекта
-  refreshUI();
+function spawnBubble(){
+  const b = document.createElement('div');
+  b.className='bubble';
+  b.style.left = (45 + Math.random()*10) + '%';
+  b.style.setProperty('--x', (Math.random()*60-30)+'px');
+  ui.stage.appendChild(b);
+  setTimeout(()=>b.remove(), 2400);
+}
+function popToast(txt){
+  ui.toast.textContent = txt;
+  ui.toast.classList.add('show');
+  setTimeout(()=>ui.toast.classList.remove('show'),600);
 }
 
-/* Событие двери холодильника */
-let doorTimer = 0;
-function maybeOpenDoor(dt){
-  doorTimer -= dt*S.speed;
-  if (doorTimer<=0){
-    // каждое "окно" 18–34 секунд
-    doorTimer = (18000 + Math.random()*16000);
-    // 45% шанс, что дверь действительно откроют
-    if (Math.random()<0.45){
+function refresh(){
+  ui.n('st-broth').textContent = f(S.broth);
+  ui.n('st-smell').textContent = Math.round(S.smell)+'%';
+  ui.n('st-risk').textContent = Math.round(S.risk)+'%';
+  ui.n('st-fame').textContent = Math.floor(S.fame);
+  ui.n('bar-smell').style.width = S.smell+'%';
+  ui.n('bar-risk').style.width = S.risk+'%';
+  ui.n('bar-fame').style.width = clamp(S.fame/WIN_FAME*100,0,100)+'%';
+  ui.n('rate-broth').textContent = `+${S.perClick}/клик • +${S.auto.toFixed(1)}/с`;
+  ui.n('st-upg').textContent = Object.keys(S.upgrades).length;
+  ui.n('st-events').textContent = S.events;
+  document.getElementById('btn-win').disabled = S.fame<WIN_FAME || S.risk>=100;
+  document.getElementById('speedLabel').textContent = S.speed+'×';
+  document.getElementById('btn-enz').textContent = `Энзимная раскачка: ${S.enzymes?'вкл':'выкл'}${S.enzymes?` (${Math.ceil(S.enzTimer/1000)}с)`:''}`;
+}
+
+/* События */
+function maybeDoor(dt){
+  g.doorTimer -= dt*S.speed;
+  if (g.doorTimer<=0){
+    g.doorTimer = 15000 + Math.random()*15000;
+    if (Math.random()<0.5){
       S.doors++;
-      const base = 8 + S.smell*0.35 - S.biofilms*2.5;
-      let delta = Math.max(2, base) * S.mod.doorFactor;
-
-      if (S.mod.quantumDoor && Math.random()<0.20){
-        // квантовый фокус — риск уменьшается
-        delta = -Math.min(6, base*0.6);
-        log('Квантовый бульон сыграл на нашей стороне — риск снизился при открытии двери!');
-      } else {
-        log('Дверца холодильника открылась — кто-то что-то ищет…');
-      }
-
-      S.detect = clamp(S.detect + delta, 0, 100);
-
-      // иногда ещё и перемешали кастрюлю — небольшой всплеск запаха
-      if (Math.random()<0.35){
-        S.smell = clamp(S.smell + 6, 0, 100);
-        log('Нас чуть-чуть потревожили — запах усилился.');
-      }
+      const delta = Math.max(2, 6 + S.smell*0.25) * (g.mod.inspector);
+      S.risk = clamp(S.risk + delta,0,100);
+      log('Открыли холодильник. Кто-то нюхает суп с выражением «а что это у нас тут?»');
     }
   }
 }
+function randomFunny(dt){
+  g.randTimer -= dt*S.speed;
+  if (g.randTimer<=0){
+    g.randTimer = 9000 + Math.random()*11000;
+    // один из событий
+    const r = Math.random(); S.events++;
+    if (r<0.20){
+      S.broth += 10; log('Кот Сократ облизал крышку. Коты — это маркетинг. +10 бульона');
+    }else if (r<0.40){
+      S.smell = clamp(S.smell + 8,0,100); log('«Час чеснока»: повар вдохновился. Запах пополз к залу.');
+    }else if (r<0.55){
+      S.risk = clamp(S.risk + 12,0,100); log('Инспектор заглянул: «Пахнет… жизнью». Риск растёт.');
+    }else if (r<0.70){
+      if (g.mod.dropSpoon){ S.broth += 5; log('Повар-ленивец уронил ложку в суп. Ну… вкуснее же? +5 бульона'); }
+      else { log('Официант репетирует падение ложки, но без энтузиазма.'); }
+    }else if (r<0.85){
+      S.fame += 6; log('Бабушка из зала сказала «как в молодости». +6 к славе');
+    }else{
+      // отключение света — запах слегка падает, риск тоже
+      S.smell = clamp(S.smell - 6,0,100);
+      S.risk = clamp(S.risk - 6,0,100);
+      log('Отключили свет. Все делают вид, что так и было. Запах и риск снижаются.');
+    }
+    confetti(12);
+  }
+}
 
-/* Покупки/кнопки */
-function tryBuyMicrobe(){
-  const c = microbeCost();
-  if (S.nutrients>=c){
-    S.nutrients -= c;
-    S.microbes += 1;
-    refreshUI(); save();
-  }
-}
-function tryBuyThinker(){
-  if (S.nutrients>=COST.thinkerNutri && S.microbes>=COST.thinkerPop){
-    S.nutrients -= COST.thinkerNutri;
-    S.microbes -= COST.thinkerPop;
-    S.thinkers += 1;
-    refreshUI(); save();
-  }
-}
-function tryBuildBiofilm(){
-  if (S.nutrients>=COST.biofilmNutri && S.microbes>=COST.biofilmPop){
-    S.nutrients -= COST.biofilmNutri;
-    S.microbes -= COST.biofilmPop;
-    S.biofilms += 1;
-    log('Вырастили новый биокупол. Запах маскируется лучше.');
-    refreshUI(); save();
-  }
-}
-function toggleEnzymes(){
+/* Энзимный режим */
+function toggleEnz(){
   if (!S.enzymes){
-    if (S.nutrients>=5){
-      S.nutrients -= 5;
-      S.enzymes = true; S.enzymesTimer = 20000; // 20с
-      log('Энзимная вечеринка! Производство растёт, но запах тоже.');
+    if (S.broth>=5){
+      S.broth-=5; S.enzymes=true; S.enzTimer=15000; // 15 сек
+      log('Энзимы запущены. Кухня звучит как джаз.');
     }
-  } else {
-    S.enzymes = false; log('Энзимы выключены.');
+  }else{
+    S.enzymes=false; log('Энзимная вечеринка кончилась. Все разошлись нюхать оливки.');
   }
-  refreshUI();
+  refresh();
+}
+
+/* Авто-прибыль и пассивы */
+function tick(dt){
+  S.t += dt*S.speed;
+
+  // авто-бульон
+  let autoRate = S.auto;
+  if (S.enzymes){ autoRate*=1.6; S.smell = clamp(S.smell + 0.8*dt/1000*60,0,100); S.enzTimer-=dt*S.speed; if (S.enzTimer<=0){ S.enzymes=false; log('Энзимы устали.'); } }
+  S.broth += autoRate * dt/1000;
+
+  // превращение запаха в бульон (перфюм)
+  if (g.mod.smellToBroth && S.smell>5){
+    const s = 0.002 * S.smell * dt/1000;
+    S.smell = Math.max(0, S.smell - s*0.8);
+    S.broth += s*4;
+  }
+
+  // риск растёт от запаха
+  S.risk = clamp(S.risk + (S.smell*0.01*g.mod.smellMul) * dt/1000, 0, 100);
+
+  // дверь/рандом
+  maybeDoor(dt);
+  randomFunny(dt);
+
+  // слава медленно капает, если риск < 60
+  if (S.risk<60) S.fame += 0.02 * dt/1000 * 60;
+
+  // годы супа
+  if (Math.floor(S.t/10000)>S.year){ S.year++; }
+
+  refresh();
+  if (S.risk>=100){ endLose(); }
 }
 
 /* Победа/поражение */
-function showModal(title, text){
-  ui.modalTitle.textContent = title;
-  ui.modalText.innerHTML = text;
-  ui.modal.style.display = 'grid';
+function endLose(){
+  showModal('Слиты в унитаз 💧🚽',
+    `<span class="danger">Инспектор вздохнул, официант заплакал, а кастрюлю… ну ты понял.</span><br><br>
+     Итоги: Слава ${Math.floor(S.fame)}, апгрейдов ${Object.keys(S.upgrades).length}, событий ${S.events}.`);
 }
-function hideModal(){ ui.modal.style.display='none'; }
-
-function checkEnd(){
-  if (S.detect>=100){
-    showModal('Слиты в унитаз 💧🚽',
-      `<span class="danger">Люди обнаружили подозрительный суп и без раздумий избавились от вас.</span><br><br>
-       Ваш интеллект достиг <b>${Math.floor(S.research)}</b>. В следующий раз держите запах ниже и стройте больше биокуполов.`);
-    return true;
-  }
-  return false;
-}
-
 function tryWin(){
-  if (S.research >= WIN_INTEL && S.detect<100){
-    showModal('ПОБЕДА! Вы обрели Разум 🧠✨',
-      `<span class="win">Цивилизация супа оформилась! Вы незаметно
-       переписали наклейку «Не выбрасывать» и колонизировали ближайшие контейнеры.</span><br><br>
-       <b>Итоги:</b> интеллект ${Math.floor(S.research)}, биокуполов ${S.biofilms}, дверца открывалась ${S.doors} раз.`);
+  if (S.fame>=WIN_FAME && S.risk<100){
+    showModal('ПОБЕДА! Греческий Разум пробудился 🧠🇬🇷',
+      `<span class="win">Суп признан шедевром. Мы повесили табличку «Не выливать, только молиться».</span><br><br>
+       Итоги: Слава ${Math.floor(S.fame)}, Бульон ${f(S.broth)}, событий ${S.events}.`);
+  }
+}
+function showModal(title, html){
+  ui.mt.textContent=title; ui.mx.innerHTML=html; document.getElementById('modal').style.display='grid';
+}
+function hideModal(){ document.getElementById('modal').style.display='none'; }
+
+/* Конфетти (минимал) */
+function confetti(n=20){
+  for(let i=0;i<n;i++){
+    const s=document.createElement('div');
+    Object.assign(s.style,{
+      position:'fixed', left:(Math.random()*100)+'%', top:'-10px',
+      width:'6px', height:'10px', background:['#73f0ff','#9affb1','#ffd36d','#ff9b7c'][i%4],
+      transform:`rotate(${Math.random()*360}deg)`,
+      borderRadius:'2px', zIndex:9999, opacity:1, transition:'transform 1.2s linear, top 1.2s linear, opacity 1.2s'
+    });
+    document.body.appendChild(s);
+    requestAnimationFrame(()=>{
+      s.style.top='110%';
+      s.style.transform=`translateY(90vh) rotate(${720+Math.random()*720}deg)`;
+      s.style.opacity=0.8;
+    });
+    setTimeout(()=>s.remove(),1300);
   }
 }
 
 /* Сохранение */
-const SAVE_KEY='soup-civ-save';
-function save(){ localStorage.setItem(SAVE_KEY, JSON.stringify(S)); ui.n('saveLabel').textContent='вкл'; }
+const KEY='greko-clicker-save';
+function save(){ localStorage.setItem(KEY, JSON.stringify(S)); document.getElementById('saveLabel').textContent='вкл'; }
 function load(){
-  const raw = localStorage.getItem(SAVE_KEY);
-  if (!raw) return;
-  try{
-    const obj = JSON.parse(raw);
-    Object.assign(S, obj);
-    // протянуть модификаторы, если старое сохранение
-    S.mod = Object.assign({
-      nutrMul:1, scienceMul:1, smellMul:1, doorFactor:1, biofilmBonus:0,
-      enzProd:1.5, enzSmell:1.4, smellToNutri:false, quantumDoor:false
-    }, S.mod || {});
-  }catch(e){ console.warn('load failed', e); }
+  try{ const raw=localStorage.getItem(KEY); if(!raw) return; const o=JSON.parse(raw); Object.assign(S,o); }catch(e){}
 }
 
-/* Привязка UI */
-document.getElementById('buy-microbe').addEventListener('click', tryBuyMicrobe);
-document.getElementById('buy-thinker').addEventListener('click', tryBuyThinker);
-document.getElementById('build-biofilm').addEventListener('click', tryBuildBiofilm);
-document.getElementById('toggle-enzymes').addEventListener('click', toggleEnzymes);
-document.getElementById('btn-win').addEventListener('click', tryWin);
+/* UI bind */
+document.getElementById('btn-stir').onclick=stir;
+document.getElementById('btn-enz').onclick=toggleEnz;
+document.getElementById('btn-win').onclick=tryWin;
+document.getElementById('btn-reset').onclick=()=>{ if(confirm('Сбросить прогресс?')){ localStorage.removeItem(KEY); location.reload(); } };
+document.getElementById('btn-pause').onclick=(e)=>{ if(S.speed>0){S._ps=S.speed;S.speed=0;e.target.textContent='Продолжить'}else{S.speed=S._ps||1;e.target.textContent='Пауза'} };
+document.getElementById('m-continue').onclick=()=>hideModal();
+document.getElementById('m-reset').onclick=()=>{ localStorage.removeItem(KEY); location.reload(); };
+Array.from(document.querySelectorAll('[data-speed]')).forEach(b=>b.onclick=()=>{ S.speed=Number(b.dataset.speed); document.getElementById('speedLabel').textContent=S.speed+'×'; });
 
-document.getElementById('btn-pause').addEventListener('click', e=>{
-  if (S.speed>0){ S._prevSpeed=S.speed; S.speed=0; e.target.textContent='Продолжить'; }
-  else { S.speed= S._prevSpeed || 1; e.target.textContent='Пауза'; }
-});
+/* init */
+load(); drawUpgrades(); refresh(); log('Добро пожаловать в GREKO. Мы не кладём «любовь» — у нас кончилась на прошлой неделе.');
 
-document.getElementById('btn-reset').addEventListener('click', ()=>{
-  if (confirm('Сбросить прогресс и удалить сохранение?')){
-    localStorage.removeItem(SAVE_KEY); location.reload();
-  }
-});
-
-ui.modalClose.addEventListener('click', ()=>{ hideModal(); });
-ui.modalReset.addEventListener('click', ()=>{
-  localStorage.removeItem(SAVE_KEY); location.reload();
-});
-
-ui.btnsSpeed.forEach(b=>{
-  b.addEventListener('click',()=>{
-    S.speed = Number(b.dataset.speed)||1;
-    document.getElementById('btn-pause').textContent='Пауза';
-  })
-});
-
-/* Инициализация */
-load();
-drawUpgrades();
-refreshUI();
-log('Добро пожаловать в кастрюлю. Пахните аккуратно и учитесь быстрее!');
-
-/* Игровой цикл */
-let last = performance.now();
-function loop(now){
-  const dt = now - last; last = now;
-  if (S.speed>0){
-    tick(dt);
-    if (!checkEnd() && Math.floor(S.time)%5000===0){ save(); } // периодическое автосохранение
-  }
-  requestAnimationFrame(loop);
-}
+let last=performance.now();
+function loop(now){ const dt=now-last; last=now; if(S.speed>0){ tick(dt); if(Math.floor(S.t)%4000===0) save(); } requestAnimationFrame(loop); }
 requestAnimationFrame(loop);
 </script>
 </body>
