@@ -3,146 +3,86 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>GREKO — Суповый кликер в ресторане</title>
+<title>GREKO: Сладкий Бой — Конфетчик против всех</title>
 <style>
   :root{
-    --bg1:#071428; --bg2:#0b1f3f;
-    --card:#0e1f3d; --line:#274170;
-    --ink:#eaf2ff; --muted:#9fb3d8;
-    --accent:#73f0ff; --accent2:#9affb1; --gold:#ffd36d;
+    --bg1:#071428; --bg2:#0b1f3f; --ink:#eaf2ff; --muted:#9fb3d8;
+    --line:#274170; --card:#0e1f3d; --accent:#73f0ff; --accent2:#9affb1; --gold:#ffd36d;
     --ok:#32d39c; --warn:#ff9b7c; --danger:#ff5670;
   }
-  *{box-sizing:border-box}
-  html,body{height:100%}
+  *{box-sizing:border-box} html,body{height:100%}
   body{
     margin:0; color:var(--ink); font:16px/1.45 system-ui,Segoe UI,Roboto,Arial;
     background:
-      radial-gradient(1200px 700px at 70% -10%, #19335e 0%, transparent 60%),
-      radial-gradient(900px 500px at -10% 30%, #132a4f 0%, transparent 60%),
+      radial-gradient(1200px 700px at 70% -10%, #18335e 0%, transparent 60%),
+      radial-gradient(900px 500px at -10% 30%, #142a4f 0%, transparent 60%),
       linear-gradient(180deg,var(--bg1),var(--bg2));
-    background-attachment:fixed;
-    overflow-x:hidden;
+    background-attachment:fixed; overflow:hidden;
   }
   header{
     display:flex; align-items:center; justify-content:space-between; gap:16px;
-    padding:14px 16px; border-bottom:1px solid var(--line);
+    padding:12px 14px; border-bottom:1px solid var(--line);
   }
   .title{display:flex; gap:12px; align-items:center}
-  .logo{width:46px;height:46px;border-radius:12px;
+  .logo{width:44px;height:44px;border-radius:12px;
     background:
       radial-gradient(circle at 35% 35%, #ffd36d 0 40%, #b65c00 42% 48%, transparent 50%),
       conic-gradient(#ffaa00,#ff7b00,#ff4d00,#ffaa00);
     box-shadow:0 0 22px rgba(255,209,109,.35), 0 6px 18px #0008; border:1px solid #ffb13f66;
   }
-  h1{margin:0;font-size:18px;letter-spacing:.3px}
-  .sub{font-size:12px;color:var(--muted)}
-  .wrap{max-width:1100px;margin:0 auto;padding:16px}
-  .grid{display:grid;grid-template-columns:1.1fr 1fr;gap:16px}
-  .card{background:var(--card); border:1px solid var(--line); border-radius:16px; padding:14px; box-shadow:0 8px 28px #0007}
-  h2{margin:0 0 8px;font-size:16px}
-  .stats{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
-  .pill{background:linear-gradient(180deg,#0f1f3e,#0b1730); border:1px solid var(--line); border-radius:12px; padding:10px}
-  .cap{font-size:12px;color:var(--muted)}
-  .val{font-weight:800;font-size:18px;margin-top:2px}
-  .hint{color:var(--muted);font-size:12px}
-  .bar{height:12px;background:#0b1730;border:1px solid var(--line);border-radius:999px;overflow:hidden}
-  .bar > i{display:block;height:100%; background:linear-gradient(90deg,var(--accent),#58ffa3)}
-  .bar.warn > i{background:linear-gradient(90deg,#ffb37b,#ff6b6b)}
-  .row{display:flex;gap:8px;flex-wrap:wrap}
-  button{
-    cursor:pointer;border:1px solid var(--line);background:#0d1830;color:var(--ink);
-    padding:10px 12px;border-radius:12px;font-weight:700;transition:.15s transform,.15s opacity,.15s filter;
-    box-shadow:0 2px 10px #0006
-  }
-  button:hover{transform:translateY(-1px)}
-  button:disabled{opacity:.55;cursor:not-allowed;transform:none}
-  .btn-acc{background:#0c2232;border-color:#1c405a}
-  .btn-warn{background:#2c1620;border-color:#5a2942}
-  .btn-ok{background:#11281f;border-color:#2f5a41}
-  .cost{font-weight:700;color:var(--muted);font-size:12px;margin-left:6px}
-
-  /* Неоновая вывеска GREKO */
+  h1{margin:0;font-size:18px;letter-spacing:.4px}
   .neon{
-    text-shadow:
-      0 0 6px rgba(115,240,255,.8),
-      0 0 18px rgba(115,240,255,.6),
-      0 0 36px rgba(115,240,255,.4);
     color:var(--accent);
-    letter-spacing:2px;
+    text-shadow:0 0 6px rgba(115,240,255,.9),0 0 16px rgba(115,240,255,.6),0 0 28px rgba(115,240,255,.35);
     animation:glow 3s ease-in-out infinite;
-    font-weight:900;
   }
-  @keyframes glow{
-    0%,100%{filter:drop-shadow(0 0 0 rgba(115,240,255,.5))}
-    50%{filter:drop-shadow(0 0 12px rgba(115,240,255,.7))}
-  }
+  @keyframes glow{0%,100%{filter:drop-shadow(0 0 0 rgba(115,240,255,.6))}50%{filter:drop-shadow(0 0 10px rgba(115,240,255,.9))}}
+  .sub{font-size:12px;color:var(--muted)}
 
-  /* Сцена кухни: кастрюля с пузырьками и паром */
-  .kitchen{
-    position:relative; height:280px; border:1px dashed #2a3f69; border-radius:14px; overflow:hidden;
-    background:
-      radial-gradient(300px 120px at 50% 110%, #0b1a33 0, transparent 70%),
-      linear-gradient(#0b1f3d,#0b1a33);
+  .hud{
+    position:fixed; left:12px; top:64px; display:flex; gap:10px; align-items:center; z-index:5;
+    background:#0b1730aa; border:1px solid var(--line); border-radius:12px; padding:6px 10px; backdrop-filter:blur(2px)
   }
-  .pot{
-    position:absolute; left:50%; bottom:22px; width:320px; height:140px; transform:translateX(-50%);
-    border-radius:22px 22px 34px 34px; background:linear-gradient(180deg,#1a2f55,#0f1d3a);
-    border:2px solid #2b4a82; box-shadow:inset 0 -12px 30px #0008, 0 10px 20px #0009;
+  .bar{height:12px;background:#0b1730;border:1px solid var(--line);border-radius:999px;overflow:hidden;width:160px}
+  .bar > i{display:block;height:100%; background:linear-gradient(90deg,var(--accent),#58ffa3)}
+  .bar.danger>i{background:linear-gradient(90deg,#ffb37b,#ff6b6b)}
+  .tag{padding:4px 8px;border:1px solid var(--line);border-radius:999px;font-size:12px;color:#c6d6f5}
+
+  .panel{
+    position:fixed; right:12px; top:64px; z-index:5; display:flex; gap:6px; flex-wrap:wrap;
   }
-  .pot:before{
-    content:''; position:absolute; left:-10px; right:-10px; top:-14px; height:22px; border-radius:18px;
-    background:linear-gradient(180deg,#203c6e,#102547); border:2px solid #2b4a82;
+  .btn{
+    cursor:pointer; border:1px solid var(--line); background:#0d1830; color:var(--ink);
+    padding:8px 10px; border-radius:10px; font-weight:800; box-shadow:0 3px 12px #0007;
   }
-  .steam{
-    position:absolute; left:50%; bottom:180px; width:200px; height:150px; transform:translateX(-50%);
-    pointer-events:none;
-    background:
-      radial-gradient(60px 40px at 50% 100%, rgba(255,255,255,.15), transparent 60%),
-      radial-gradient(70px 50px at 30% 100%, rgba(255,255,255,.12), transparent 60%),
-      radial-gradient(70px 50px at 70% 100%, rgba(255,255,255,.12), transparent 60%);
-    animation:steam 3.6s ease-in-out infinite;
-    filter:blur(1px);
-  }
-  @keyframes steam{
-    0%{transform:translate(-50%,0) scale(1);opacity:.6}
-    100%{transform:translate(-50%,-40px) scale(1.2);opacity:.05}
-  }
-  .bubble{
-    position:absolute; bottom:40px; left:50%; width:10px; height:10px; border-radius:50%;
-    background:radial-gradient(circle at 30% 30%, #bff 0,#69a 50%,#235 80%);
-    opacity:.9; animation:rise 2.4s ease-out infinite;
-  }
-  @keyframes rise{
-    0%{transform:translate(-50%,0) scale(.8);opacity:.0}
-    10%{opacity:.9}
-    100%{transform:translate(calc(-50% + var(--x,0px)),-110px) scale(1.4);opacity:0}
-  }
-  .shake{animation:shake .3s linear 1}
-  @keyframes shake{
-    0%,100%{transform:translateX(0)}
-    20%{transform:translateX(-3px)}
-    40%{transform:translateX(3px)}
-    60%{transform:translateX(-2px)}
-    80%{transform:translateX(2px)}
-  }
+  .btn:hover{filter:brightness(1.1)}
+  .btn-warn{background:#2c1620;border-color:#5a2942}
+  .btn-acc{background:#0c2232;border-color:#1c405a}
+  .btn-ok{background:#11281f;border-color:#2f5a41}
+
+  .wrap{position:relative; width:100%; height:calc(100% - 72px)}
+  canvas{position:absolute; inset:0; width:100%; height:100%}
+
   .toast{
     position:fixed; left:50%; top:18px; transform:translateX(-50%);
     background:#0b1830; border:1px solid var(--line); padding:10px 14px; border-radius:12px;
-    font-weight:700; box-shadow:0 10px 30px #0009; opacity:0; pointer-events:none;
-    transition:.3s opacity, .3s transform;
+    font-weight:800; box-shadow:0 10px 30px #0009; opacity:0; pointer-events:none;
+    transition:.3s opacity, .3s transform; z-index:10;
   }
   .toast.show{opacity:1; transform:translateX(-50%) translateY(4px)}
-  .log{font-family:ui-monospace,Consolas,monospace;font-size:13px;white-space:pre-line;max-height:240px;overflow:auto;padding:10px;border:1px solid var(--line);border-radius:12px;background:#0a1426}
-  .tag{padding:4px 8px;border:1px solid var(--line);border-radius:999px;font-size:12px;color:#c6d6f5}
-  .right .card{height:100%}
-  .footer{padding:12px 0 28px;text-align:center;color:#8aa4cb;font-size:12px}
-  .kbd{border:1px solid #2b3e65;border-radius:6px;padding:.5px 6px;background:#0b1730}
 
-  /* модалка */
-  .modal{position:fixed;inset:0;display:none;place-items:center;background:rgba(6,10,20,.65);backdrop-filter:blur(3px)}
-  .box{max-width:560px;background:#0e1f3d;border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 16px 44px #000a}
+  .modal{position:fixed;inset:0;display:none;place-items:center;background:rgba(6,10,20,.65);backdrop-filter:blur(3px);z-index:20}
+  .box{max-width:640px;background:#0e1f3d;border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 16px 44px #000a}
   .box h3{margin:.2rem 0 .4rem}
-  .win{color:#9fffd1} .danger{color:#ff8e8e}
+  .hint{color:var(--muted)}
+
+  /* Мобильные кнопки */
+  .mobile{
+    position:fixed; bottom:14px; left:14px; right:14px; display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:10px; z-index:6;
+  }
+  .mb{background:#0b1730b0; border:1px solid var(--line); border-radius:12px; padding:16px; text-align:center; font-weight:900; box-shadow:0 8px 24px #0008; user-select:none}
+  .noselect{user-select:none;-webkit-user-select:none}
+  @media (min-width:900px){ .mobile{display:none} }
 </style>
 </head>
 <body>
@@ -150,355 +90,505 @@
   <div class="title">
     <div class="logo"></div>
     <div>
-      <h1 class="neon">GREKO • СУПОВЫЙ КЛИКЕР</h1>
-      <div class="sub">Ресторан GREKO: мы любим оливки, чеснок и сарказм. Кликаешь — мешаешь суп, растишь славу. Старайся не вонять так, чтобы нас закрыли.</div>
+      <h1 class="neon">GREKO: СЛАДКИЙ БОЙ — Конфетчик идёт вперёд</h1>
+      <div class="sub">Иди направо, раздавай <b>удары ногой</b>, собирай чаевые и шути. Финальный босс — Директор Екатерина.</div>
     </div>
   </div>
-  <div class="row">
-    <button id="btn-pause" class="btn-acc">Пауза</button>
-    <button id="btn-reset" class="btn-warn" title="Начать заново">Сброс</button>
+  <div class="panel">
+    <button class="btn btn-acc" id="btn-start">Старт</button>
+    <button class="btn btn-acc" id="btn-pause">Пауза</button>
+    <button class="btn btn-warn" id="btn-restart">Рестарт</button>
   </div>
 </header>
 
-<div class="wrap">
-  <div class="stats">
-    <div class="pill"><div class="cap">Бульон</div><div class="val" id="st-broth">0</div><div class="hint" id="rate-broth">+0/клик • +0/с</div></div>
-    <div class="pill"><div class="cap">Запах</div><div class="val" id="st-smell">0%</div><div class="bar warn"><i id="bar-smell" style="width:0%"></i></div></div>
-    <div class="pill"><div class="cap">Риск</div><div class="val" id="st-risk">0%</div><div class="bar warn"><i id="bar-risk" style="width:0%"></i></div></div>
-    <div class="pill"><div class="cap">Слава GREKO</div><div class="val" id="st-fame">0</div><div class="bar"><i id="bar-fame" style="width:0%"></i></div></div>
-    <div class="pill"><div class="cap">Апгрейды</div><div class="val" id="st-upg">0</div><div class="hint">Ещё больше бесполезной гордости</div></div>
-    <div class="pill"><div class="cap">События</div><div class="val" id="st-events">0</div><div class="hint">Случайности — наша специя</div></div>
-  </div>
-
-  <div class="grid">
-    <div class="left">
-      <div class="card">
-        <h2>Кухня GREKO</h2>
-        <div class="kitchen" id="stage">
-          <div class="steam"></div>
-          <div class="pot" id="pot"></div>
-          <!-- пузырьки генерятся скриптом -->
-        </div>
-        <div class="row" style="margin-top:12px">
-          <button id="btn-stir" class="btn-ok" style="font-size:18px">🥄 Помешать суп</button>
-          <button id="btn-enz" class="btn-acc" title="Короткий буст, но запах вырастет">Энзимная раскачка: выкл</button>
-          <span class="tag">Скорость: <b id="speedLabel">1×</b></span>
-          <button class="btn-acc" data-speed="1">1×</button>
-          <button class="btn-acc" data-speed="2">2×</button>
-          <button class="btn-acc" data-speed="4">4×</button>
-        </div>
-      </div>
-
-      <div class="card">
-        <h2>Апгрейды (дёшево и сердито)</h2>
-        <div id="upg" class="row" style="gap:10px;flex-wrap:wrap"></div>
-        <div class="hint" style="margin-top:6px">Победа: накопи <b>100</b> Славы и нажми «Провозгласить Греческий Разум».</div>
-        <div class="row" style="margin-top:8px">
-          <button id="btn-win" class="btn-ok" disabled>Провозгласить Греческий Разум 🧠</button>
-        </div>
-      </div>
-
-      <div class="card">
-        <h2>Журнал</h2>
-        <div id="log" class="log"></div>
-      </div>
-    </div>
-
-    <div class="right">
-      <div class="card">
-        <h2>Ситуации в ресторане</h2>
-        <div class="row">
-          <span class="tag">Автосохранение: <b id="saveLabel">вкл</b></span>
-          <span class="tag">Год супа: <b id="year">0</b></span>
-          <span class="tag">Открытий холодильника: <b id="doors">0</b></span>
-        </div>
-        <p class="hint" style="margin-top:6px">
-          Смешные случайности сами всплывают: инспектор, кот Сократ, «час чеснока», отключение света, официант уронил ложку, бармен подлил узо. Иногда это хорошо. Иногда — увольнение.
-        </p>
-        <h2 style="margin-top:12px">Новости дня</h2>
-        <div id="news" class="hint">Пока тихо… подозрительно тихо.</div>
-      </div>
-    </div>
-  </div>
+<div class="hud noselect">
+  <span class="tag">Дистанция: <b id="dist">0м</b></span>
+  <span class="tag">Чаевые: <b id="tips">0</b></span>
+  <span class="tag">Волна: <b id="wave">1</b></span>
+  <div class="tag">Здоровье&nbsp;</div>
+  <div class="bar danger"><i id="hpbar" style="width:100%"></i></div>
 </div>
 
-<div class="toast" id="toast">+1 бульон</div>
+<div class="wrap"><canvas id="c"></canvas></div>
 
-<div id="modal" class="modal">
+<div class="mobile">
+  <div class="mb" id="mv-left">←</div>
+  <div class="mb" id="mv-right">→</div>
+  <div class="mb" id="mv-jump">↑</div>
+  <div class="mb" id="mv-kick">🦵</div>
+</div>
+
+<div class="toast" id="toast">+1</div>
+
+<div class="modal" id="modal">
   <div class="box">
-    <h3 id="m-title">Заголовок</h3>
-    <p id="m-text">Текст</p>
-    <div class="row">
-      <button id="m-continue" class="btn-acc">Продолжить</button>
-      <button id="m-reset" class="btn-warn">Сыграть заново</button>
+    <h3 id="m-title">Добро пожаловать в GREKO!</h3>
+    <p id="m-text" class="hint">
+      Управление: <b>A/←</b> и <b>D/→</b> — ходьба, <b>W/↑</b> — прыжок, <b>Space</b> — удар ногой, <b>P</b> — пауза.<br>
+      Разбери ресторан: повара, официанты, вредные клиенты… В финале выйдет <b>Директор Екатерина</b> — держись!
+    </p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn btn-ok" id="m-go">Поехали!</button>
+      <button class="btn btn-warn" id="m-close">Закрыть</button>
     </div>
   </div>
 </div>
-
-<div class="footer">© GREKO. Если пахнет — это аутентично. Если слишком пахнет — это не мы.</div>
 
 <script>
-/* ====== Простая модель кликера ====== */
-const WIN_FAME = 100;
+/* ==========================================================
+   GREKO: Сладкий Бой — чистый Canvas, без ассетов
+   by you + a friendly AI. Все рисуется кодом.
+   ========================================================== */
 
-const S = {
-  t:0, year:0, speed:1,
-  broth: 0,       // валюта
-  perClick: 1,    // сколько с клика
-  auto: 0,        // авто-доход в сек
-  smell: 0,       // 0..100
-  risk: 0,        // 0..100
-  fame: 0,        // прогресс к победе
-  doors: 0,
-  enzymes:false, enzTimer:0,
-  upgrades:{},
-  events:0
+const DPR = Math.min(2, window.devicePixelRatio || 1);
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+
+function resize(){
+  const w = canvas.clientWidth, h = canvas.clientHeight;
+  canvas.width = Math.floor(w * DPR);
+  canvas.height = Math.floor(h * DPR);
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+}
+window.addEventListener('resize', resize);
+resize();
+
+/* ---------- Утилиты ---------- */
+const rand = (a,b)=>a+Math.random()*(b-a);
+const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
+const ease=(t)=>t<.5?2*t*t:-1+(4-2*t)*t;
+
+function sfx(type){
+  try{
+    const ac = sfx.ac||(sfx.ac=new (window.AudioContext||window.webkitAudioContext)());
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    const preset = {
+      kick:[220,0.05,0.12], hit:[440,0.02,0.08], hurt:[110,0.04,0.25],
+      coin:[880,0.03,0.1], win:[660,0.04,0.5]
+    }[type] || [330,0.03,0.12];
+    o.frequency.value=preset[0]; g.gain.value=preset[1];
+    o.start(); g.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime+preset[2]); o.stop(ac.currentTime+preset[2]);
+  }catch(e){}
+}
+
+function toast(t){
+  const el = document.getElementById('toast');
+  el.textContent = t; el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'),600);
+}
+
+/* ---------- Игровые объекты ---------- */
+const G = {
+  started:false, paused:false, t:0, dt:0,
+  camX:0, dist:0, tips:0, wave:1,
+  ground:0, width:0, height:0, bossSpawned:false, gameOver:false, win:false
 };
 
-const UPG = [
-  {id:'olive',  name:'Добавить оливковое масло',     cost:20,  desc:'+1 к бульону за клик. Пахнет культурнее.', apply:()=>S.perClick+=1},
-  {id:'garlic', name:'Час чеснока',                  cost:35,  desc:'+0.5 авто/с, но запах растёт быстрее.',   apply:()=>{S.auto+=0.5; g.mod.smellMul*=1.15}},
-  {id:'lazy',   name:'Нанять повара-ленивца',        cost:60,  desc:'+1 авто/с, иногда роняет ложку.',          apply:()=>{S.auto+=1; g.mod.dropSpoon=true}},
-  {id:'bio',    name:'Биокупол на кастрюлю',         cost:80,  desc:'Запах медленнее на 20%.',                  apply:()=>g.mod.smellMul*=0.8},
-  {id:'rebrand',name:'Переименовать суп в «Дзадзики»',cost:90, desc:'Риск от инспектора падает сильнее.',        apply:()=>g.mod.inspector*=0.6},
-  {id:'uzou',   name:'Бармен подливает узо',         cost:110, desc:'+2 авто/с, но персонал шутит громче.',     apply:()=>S.auto+=2},
-  {id:'perf',   name:'Парфюм из рассола',            cost:130, desc:'Часть запаха превращается в бульон.',      apply:()=>g.mod.smellToBroth=true},
-];
+const input = {left:false,right:false,up:false,attack:false};
 
-const g = { // модификаторы и таймеры событий
-  mod:{smellMul:1, inspector:1, smellToBroth:false, dropSpoon:false},
-  doorTimer:0, randTimer:0
+const player = {
+  x:40, y:0, vx:0, vy:0, w:36, h:64, face:1,
+  onGround:false, hp:100, maxHp:100, inv:0,
+  state:'idle', kickT:0
 };
 
-function f(n){ return n>=1e6? (n/1e6).toFixed(2)+'м' : n>=1e3? (n/1e3).toFixed(2)+'к' : Math.floor(n); }
-function clamp(n,a,b){return Math.max(a,Math.min(b,n));}
+const enemies = []; const particles = []; const texts = [];
 
-const ui = {
-  n: id=>document.getElementById(id),
-  stage: document.getElementById('stage'),
-  pot: document.getElementById('pot'),
-  toast: document.getElementById('toast'),
-  upg: document.getElementById('upg'),
-  log: document.getElementById('log'),
-  news: document.getElementById('news'),
-  modal: document.getElementById('modal'),
-  mt: document.getElementById('m-title'),
-  mx: document.getElementById('m-text')
-};
+function addText(x,y,msg,col='#eaf2ff'){ texts.push({x,y,msg,life:1,col}) }
+function addParticle(x,y,col){ particles.push({x,y,vx:rand(-1,1),vy:rand(-2,-0.5),life:1,col}) }
 
-function log(t){ ui.log.textContent = '• '+t+'\n' + ui.log.textContent; ui.news.textContent = t; }
-
-function drawUpgrades(){
-  ui.upg.innerHTML='';
-  UPG.forEach(u=>{
-    const have = !!S.upgrades[u.id];
-    const btn = document.createElement('button');
-    btn.className='btn-acc';
-    btn.innerHTML = `${u.name} <span class="cost">🍲 ${u.cost}</span>`;
-    btn.disabled = have || S.broth<u.cost;
-    btn.title = u.desc;
-    btn.addEventListener('click',()=>{
-      if (S.broth>=u.cost && !S.upgrades[u.id]){
-        S.broth-=u.cost; S.upgrades[u.id]=true; u.apply(); S.fame+=5;
-        document.getElementById('st-upg').textContent = Object.keys(S.upgrades).length;
-        log(`Апгрейд: ${u.name}. ${u.desc}`);
-        refresh();
-        save();
-      }
-    });
-    if (have){ btn.disabled=true; btn.style.opacity=.6; btn.textContent=u.name+' — ✔'; }
-    ui.upg.appendChild(btn);
-  });
+function spawnEnemy(type, x){
+  const base = {type, x, y:0, vx:-rand(0.8,1.6), w:34, h:56, hp:20, maxHp:20, dmg:8, cd:0, talkT:rand(2,6), name:''};
+  if (type==='chef'){ base.w=38; base.h=62; base.hp=28; base.maxHp=28; base.dmg=10; base.vx=-rand(0.6,1.1); base.name='Повар'; }
+  else if (type==='waiter'){ base.w=32; base.h=58; base.hp=18; base.maxHp=18; base.vx=-rand(1.1,1.8); base.dmg=7; base.name='Официант'; }
+  else if (type==='client'){ base.w=30; base.h=52; base.hp=14; base.maxHp=14; base.vx=-rand(0.7,1.3); base.dmg=6; base.name='Клиент'; }
+  enemies.push(base);
 }
 
-/* Бульон/клик */
-function stir(){
-  const gain = S.perClick;
-  S.broth += gain;
-  S.smell = clamp(S.smell + 0.6, 0, 100);
-  popToast(`+${gain} бульон`);
-  ui.pot.classList.add('shake'); setTimeout(()=>ui.pot.classList.remove('shake'),300);
-  spawnBubble();
-  refresh();
+function spawnBossEkaterina(x){
+  const b = {type:'boss', name:'Директор Екатерина', x, y:0, vx:-1.2, w:70, h:90, hp:160, maxHp:160, dmg:14, cd:0, dashT:3, talkT:2};
+  enemies.push(b);
+  G.bossSpawned=true;
+  say('Екатерина: «Кто тут ногами махал? Штраф в виде пони!»');
 }
 
-function spawnBubble(){
-  const b = document.createElement('div');
-  b.className='bubble';
-  b.style.left = (45 + Math.random()*10) + '%';
-  b.style.setProperty('--x', (Math.random()*60-30)+'px');
-  ui.stage.appendChild(b);
-  setTimeout(()=>b.remove(), 2400);
-}
-function popToast(txt){
-  ui.toast.textContent = txt;
-  ui.toast.classList.add('show');
-  setTimeout(()=>ui.toast.classList.remove('show'),600);
-}
+function say(line){ addText(G.camX + 360, 60, line, '#9affb1'); }
 
-function refresh(){
-  ui.n('st-broth').textContent = f(S.broth);
-  ui.n('st-smell').textContent = Math.round(S.smell)+'%';
-  ui.n('st-risk').textContent = Math.round(S.risk)+'%';
-  ui.n('st-fame').textContent = Math.floor(S.fame);
-  ui.n('bar-smell').style.width = S.smell+'%';
-  ui.n('bar-risk').style.width = S.risk+'%';
-  ui.n('bar-fame').style.width = clamp(S.fame/WIN_FAME*100,0,100)+'%';
-  ui.n('rate-broth').textContent = `+${S.perClick}/клик • +${S.auto.toFixed(1)}/с`;
-  ui.n('st-upg').textContent = Object.keys(S.upgrades).length;
-  ui.n('st-events').textContent = S.events;
-  document.getElementById('btn-win').disabled = S.fame<WIN_FAME || S.risk>=100;
-  document.getElementById('speedLabel').textContent = S.speed+'×';
-  document.getElementById('btn-enz').textContent = `Энзимная раскачка: ${S.enzymes?'вкл':'выкл'}${S.enzymes?` (${Math.ceil(S.enzTimer/1000)}с)`:''}`;
-}
-
-/* События */
-function maybeDoor(dt){
-  g.doorTimer -= dt*S.speed;
-  if (g.doorTimer<=0){
-    g.doorTimer = 15000 + Math.random()*15000;
-    if (Math.random()<0.5){
-      S.doors++;
-      const delta = Math.max(2, 6 + S.smell*0.25) * (g.mod.inspector);
-      S.risk = clamp(S.risk + delta,0,100);
-      log('Открыли холодильник. Кто-то нюхает суп с выражением «а что это у нас тут?»');
-    }
+/* ---------- Окружение ---------- */
+function drawBackground(){
+  const W=G.width, H=G.height, x=G.camX;
+  ctx.save();
+  // дальняя стена
+  ctx.fillStyle='#0d1c36'; ctx.fillRect(0,0,W,H);
+  // плитка
+  ctx.fillStyle='#102444';
+  for(let i=0;i<W;i+=40){ for(let j=0;j<H;j+=32){
+    ctx.globalAlpha=0.25; ctx.fillRect(i-(x*0.05%40), j, 36, 28); ctx.globalAlpha=1;
+  }}
+  // вывеска GREKO
+  const signX = 120 - (x*0.2%300);
+  ctx.save();
+  ctx.translate(signX,80);
+  ctx.fillStyle='#0b1226'; ctx.fillRect(-20,-18,220,46); ctx.strokeStyle='#274170'; ctx.lineWidth=2; ctx.strokeRect(-20,-18,220,46);
+  ctx.font='bold 20px system-ui'; ctx.fillStyle='#73f0ff';
+  ctx.shadowColor='#73f0ff'; ctx.shadowBlur=20; ctx.fillText('GREKO • Κουζίνα', 0,12); ctx.shadowBlur=0;
+  ctx.restore();
+  // столы (параллакс)
+  ctx.fillStyle='#14294d';
+  for(let i=-100;i<W+200;i+=160){
+    const px = i - (x*0.45%160);
+    ctx.fillRect(px, H-120, 120, 10); // столешница
+    ctx.fillRect(px+8, H-110, 10, 50);
+    ctx.fillRect(px+100, H-110, 10, 50);
   }
+  // пол
+  ctx.fillStyle='#0a152c'; ctx.fillRect(0,H-40,W,40);
+  ctx.strokeStyle='#274170'; ctx.beginPath(); ctx.moveTo(0,H-40.5); ctx.lineTo(W,H-40.5); ctx.stroke();
+  // пар из кастрюль
+  for(let i=0;i<3;i++){
+    const sx = (i*220 + 40) - (x*0.2%660);
+    ctx.globalAlpha=0.15; ctx.fillStyle='#eaf2ff';
+    ctx.beginPath(); ctx.ellipse(sx, H-150, 30, 18, 0, 0, Math.PI*2); ctx.fill();
+    ctx.globalAlpha=1;
+  }
+  ctx.restore();
 }
-function randomFunny(dt){
-  g.randTimer -= dt*S.speed;
-  if (g.randTimer<=0){
-    g.randTimer = 9000 + Math.random()*11000;
-    // один из событий
-    const r = Math.random(); S.events++;
-    if (r<0.20){
-      S.broth += 10; log('Кот Сократ облизал крышку. Коты — это маркетинг. +10 бульона');
-    }else if (r<0.40){
-      S.smell = clamp(S.smell + 8,0,100); log('«Час чеснока»: повар вдохновился. Запах пополз к залу.');
-    }else if (r<0.55){
-      S.risk = clamp(S.risk + 12,0,100); log('Инспектор заглянул: «Пахнет… жизнью». Риск растёт.');
-    }else if (r<0.70){
-      if (g.mod.dropSpoon){ S.broth += 5; log('Повар-ленивец уронил ложку в суп. Ну… вкуснее же? +5 бульона'); }
-      else { log('Официант репетирует падение ложки, но без энтузиазма.'); }
-    }else if (r<0.85){
-      S.fame += 6; log('Бабушка из зала сказала «как в молодости». +6 к славе');
+
+function drawEntity(e){
+  ctx.save(); ctx.translate(e.x-G.camX, e.y);
+  // тень
+  ctx.fillStyle='rgba(0,0,0,.35)';
+  ctx.beginPath(); ctx.ellipse(0, e.h, e.w*0.6, 8, 0, 0, Math.PI*2); ctx.fill();
+
+  if (e===player){
+    // конфетчик — шапочка, фартук, анимированные ноги
+    const t = G.t*0.012, swing = e.onGround && Math.abs(e.vx)>0.1 ? Math.sin(t*8)*8 : 0;
+    const kick = e.state==='kick';
+    // тело
+    ctx.fillStyle='#1a325d'; ctx.fillRect(-12, -e.h+20, 24, e.h-20);
+    // фартук
+    ctx.fillStyle='#2b4a82'; ctx.fillRect(-14, -e.h+40, 28, 44);
+    // голова
+    ctx.fillStyle='#ffd7b3'; ctx.fillRect(-12, -e.h, 24, 24);
+    // колпак кондитера
+    ctx.fillStyle='#eaf2ff'; ctx.fillRect(-18, -e.h-8, 36, 10); ctx.fillRect(-12, -e.h-18, 24, 12);
+    // глаза
+    ctx.fillStyle='#0b1226'; ctx.fillRect(e.face>0?2:-8, -e.h+6, 4, 4);
+    // руки
+    ctx.fillStyle='#ffd7b3'; ctx.fillRect(-18, -e.h+42, 8, 16); ctx.fillRect(10, -e.h+42, 8, 16);
+    // ноги
+    ctx.fillStyle='#203b6f';
+    if (kick){
+      ctx.fillRect(e.face>0?10:-18, -16, 24*e.face, 8); // нога-удар
     }else{
-      // отключение света — запах слегка падает, риск тоже
-      S.smell = clamp(S.smell - 6,0,100);
-      S.risk = clamp(S.risk - 6,0,100);
-      log('Отключили свет. Все делают вид, что так и было. Запах и риск снижаются.');
+      ctx.save(); ctx.translate(-6, -14); ctx.rotate(swing/30); ctx.fillRect(-4, 0, 8, 14); ctx.restore();
+      ctx.save(); ctx.translate(8, -14); ctx.rotate(-swing/30); ctx.fillRect(-4, 0, 8, 14); ctx.restore();
     }
-    confetti(12);
-  }
-}
-
-/* Энзимный режим */
-function toggleEnz(){
-  if (!S.enzymes){
-    if (S.broth>=5){
-      S.broth-=5; S.enzymes=true; S.enzTimer=15000; // 15 сек
-      log('Энзимы запущены. Кухня звучит как джаз.');
-    }
+    // сладкая крошка
+    ctx.fillStyle='#ffd36d'; ctx.fillRect(-2, -e.h+64, 4, 6);
   }else{
-    S.enzymes=false; log('Энзимная вечеринка кончилась. Все разошлись нюхать оливки.');
+    // враги
+    if (e.type==='chef'){
+      ctx.fillStyle='#3a2b2b'; ctx.fillRect(-12, -e.h+20, 24, e.h-20);
+      ctx.fillStyle='#ffffff'; ctx.fillRect(-14, -e.h-10, 28, 14); // колпак
+      ctx.fillStyle='#ffd7b3'; ctx.fillRect(-10, -e.h, 20, 20); // лицо
+      ctx.fillStyle='#704b2a'; ctx.fillRect(10, -e.h+40, 12, 6); // скалка
+    }else if (e.type==='waiter'){
+      ctx.fillStyle='#1b3c4a'; ctx.fillRect(-11, -e.h+20, 22, e.h-20);
+      ctx.fillStyle='#ffd7b3'; ctx.fillRect(-10, -e.h, 20, 18);
+      ctx.fillStyle='#c0c9ff'; ctx.fillRect(8, -e.h+26, 20, 4); // поднос
+      ctx.beginPath(); ctx.arc(22, -e.h+24, 5, 0, Math.PI*2); ctx.fillStyle='#ffd36d'; ctx.fill();
+    }else if (e.type==='client'){
+      ctx.fillStyle='#42314a'; ctx.fillRect(-10, -e.h+20, 20, e.h-20);
+      ctx.fillStyle='#ffd7b3'; ctx.fillRect(-9, -e.h+2, 18, 18);
+      ctx.fillStyle='#8b9eff'; ctx.fillRect(10, -e.h+30, 10, 14); // смартфон
+    }else if (e.type==='boss'){
+      ctx.fillStyle='#2a2a4f'; ctx.fillRect(-e.w*0.35, -e.h+20, e.w*0.7, e.h-20);
+      ctx.fillStyle='#ffd7b3'; ctx.fillRect(-18, -e.h+2, 36, 26);
+      ctx.fillStyle='#ff4d7a'; ctx.fillRect(-e.w*0.35, -e.h+46, e.w*0.7, 10); // пояс-«наказ»
+      // папка/клипборд
+      ctx.fillStyle='#ffb37b'; ctx.fillRect(e.vx<0?(-e.w*0.35-16):(e.w*0.35), -e.h+54, 16, 20);
+    }
+    // полоска хп
+    const hpw = 40;
+    ctx.fillStyle='rgba(0,0,0,.35)'; ctx.fillRect(-hpw/2, -e.h-14, hpw, 6);
+    ctx.fillStyle=e.type==='boss'?'#ff6b6b':'#73f0ff';
+    ctx.fillRect(-hpw/2, -e.h-14, hpw*(e.hp/e.maxHp), 6);
   }
-  refresh();
+  ctx.restore();
 }
 
-/* Авто-прибыль и пассивы */
-function tick(dt){
-  S.t += dt*S.speed;
+/* ---------- Спавн волн ---------- */
+let spawnX = 400;
 
-  // авто-бульон
-  let autoRate = S.auto;
-  if (S.enzymes){ autoRate*=1.6; S.smell = clamp(S.smell + 0.8*dt/1000*60,0,100); S.enzTimer-=dt*S.speed; if (S.enzTimer<=0){ S.enzymes=false; log('Энзимы устали.'); } }
-  S.broth += autoRate * dt/1000;
+function trySpawn(){
+  if (G.bossSpawned) return;
+  if (G.dist>380 && G.wave===1){ G.wave=2; toast('Волна 2: официанты вышли из теней'); }
+  if (G.dist>760 && G.wave===2){ G.wave=3; toast('Волна 3: клиенты недовольны счётом'); }
+  if (G.dist>1100 && !G.bossSpawned){ spawnBossEkaterina(G.camX + 900); toast('Босс: директор Екатерина в деле!'); }
 
-  // превращение запаха в бульон (перфюм)
-  if (g.mod.smellToBroth && S.smell>5){
-    const s = 0.002 * S.smell * dt/1000;
-    S.smell = Math.max(0, S.smell - s*0.8);
-    S.broth += s*4;
-  }
-
-  // риск растёт от запаха
-  S.risk = clamp(S.risk + (S.smell*0.01*g.mod.smellMul) * dt/1000, 0, 100);
-
-  // дверь/рандом
-  maybeDoor(dt);
-  randomFunny(dt);
-
-  // слава медленно капает, если риск < 60
-  if (S.risk<60) S.fame += 0.02 * dt/1000 * 60;
-
-  // годы супа
-  if (Math.floor(S.t/10000)>S.year){ S.year++; }
-
-  refresh();
-  if (S.risk>=100){ endLose(); }
-}
-
-/* Победа/поражение */
-function endLose(){
-  showModal('Слиты в унитаз 💧🚽',
-    `<span class="danger">Инспектор вздохнул, официант заплакал, а кастрюлю… ну ты понял.</span><br><br>
-     Итоги: Слава ${Math.floor(S.fame)}, апгрейдов ${Object.keys(S.upgrades).length}, событий ${S.events}.`);
-}
-function tryWin(){
-  if (S.fame>=WIN_FAME && S.risk<100){
-    showModal('ПОБЕДА! Греческий Разум пробудился 🧠🇬🇷',
-      `<span class="win">Суп признан шедевром. Мы повесили табличку «Не выливать, только молиться».</span><br><br>
-       Итоги: Слава ${Math.floor(S.fame)}, Бульон ${f(S.broth)}, событий ${S.events}.`);
+  while (spawnX < G.camX + G.width + 200){
+    const t = Math.random();
+    let type='chef';
+    if (G.wave>=2 && t>0.4) type='waiter';
+    if (G.wave>=3 && t>0.7) type='client';
+    spawnEnemy(type, spawnX + rand(80,250));
+    spawnX += rand(120,220);
   }
 }
-function showModal(title, html){
-  ui.mt.textContent=title; ui.mx.innerHTML=html; document.getElementById('modal').style.display='grid';
-}
-function hideModal(){ document.getElementById('modal').style.display='none'; }
 
-/* Конфетти (минимал) */
-function confetti(n=20){
+/* ---------- Физика ---------- */
+function rectsOverlap(a,b){
+  return Math.abs(a.x - b.x) < (a.w*0.5 + b.w*0.5) &&
+         Math.abs(a.y - b.y) < (a.h*0.5 + b.h*0.5);
+}
+
+function damagePlayer(dmg){
+  if (player.inv>0 || G.gameOver) return;
+  player.hp = clamp(player.hp - dmg, 0, player.maxHp);
+  player.inv = 0.6; player.state='hurt'; sfx('hurt');
+  for(let i=0;i<5;i++) addParticle(player.x, player.y-20, '#ff6b6b');
+  if (player.hp<=0){ gameOver(false); }
+}
+
+function damageEnemy(e, dmg=18, kb=3){
+  e.hp -= dmg; e.vx -= kb * Math.sign(player.face);
+  for(let i=0;i<5;i++) addParticle(e.x, e.y-20, '#9affb1');
+  sfx('hit');
+  if (e.hp<=0){
+    addText(e.x, e.y-40, '+чаевые', '#ffd36d'); sfx('coin');
+    G.tips += 5 + Math.floor(Math.random()*4);
+    // смешные реплики
+    const lines={
+      chef:'Повар: «Ну и ладно, я кондитером хотел быть!»',
+      waiter:'Официант: «А можно без ног?»',
+      client:'Клиент: «Я отзыв напишу… но сначала полежу.»',
+      boss:'Екатерина: «С отпуском разберёмся позже…»'
+    };
+    logNews(lines[e.type]||'');
+    enemies.splice(enemies.indexOf(e),1);
+    if (e.type==='boss'){ gameOver(true); }
+  }
+}
+
+function logNews(t){ if(!t) return; addText(G.camX+360, 90, t, '#9affb1'); }
+
+function update(dt){
+  if (!G.started || G.paused || G.gameOver) return;
+
+  // время
+  G.t += dt; G.dist += Math.max(0, player.vx)*dt*0.2;
+
+  // габариты
+  G.width = canvas.clientWidth; G.height = canvas.clientHeight; G.ground = G.height-40;
+
+  // управление
+  const accel = 0.8, maxv = 3.2;
+  if (input.left)  player.vx = clamp(player.vx - accel, -maxv,  maxv), player.face=-1;
+  if (input.right) player.vx = clamp(player.vx + accel, -maxv,  maxv), player.face= 1;
+  if (!input.left && !input.right){ player.vx *= 0.85; if (Math.abs(player.vx)<0.01) player.vx=0; }
+
+  if (input.up && player.onGround){ player.vy = -7; player.onGround=false; }
+  if (input.attack && player.kickT<=0){ player.state='kick'; player.kickT=0.35; sfx('kick'); }
+
+  // физика игрока
+  player.vy += 0.35; // гравитация
+  player.x += player.vx*4;
+  player.y += player.vy*2;
+  if (player.y > G.ground){ player.y = G.ground; player.vy=0; player.onGround=true; }
+  if (player.inv>0) player.inv -= dt;
+  if (player.kickT>0){
+    player.kickT -= dt;
+    if (player.kickT<=0) player.state='idle';
+  } else if (!player.onGround) player.state='jump';
+  else if (Math.abs(player.vx)>0.2) player.state='run';
+  else player.state='idle';
+
+  // ограничение слева
+  if (player.x < G.camX + 40) player.x = G.camX + 40;
+
+  // камера
+  const targetCam = player.x - G.width*0.35;
+  G.camX += (targetCam - G.camX)*0.08;
+
+  // спавн
+  trySpawn();
+
+  // враги
+  for (const e of enemies){
+    // движение
+    e.vx = clamp(e.vx, -2.2, 0.6);
+    e.x += (e.vx - 0.1*Math.sign(e.x-player.x)); // чуть тянутся к игроку
+    e.y = G.ground;
+
+    // атаки
+    e.cd -= dt;
+    if (rectsOverlap({...player,w:player.w,h:player.h}, e)){
+      if (e.cd<=0){ e.cd=0.8; damagePlayer(e.dmg); addText(player.x, player.y-60, '-'+e.dmg, '#ff6b6b'); }
+    }
+
+    // речь
+    e.talkT -= dt;
+    if (e.talkT<=0 && Math.random()<0.25){
+      e.talkT = rand(3,7);
+      const lines={
+        chef:['«Соль по вкусу, а ногой — по расписанию?»','«Это не по ГОСТу!»'],
+        waiter:['«Только не в поднос!»','«Скидку по ЗСу оформим?»'],
+        client:['«Где мой капучино на овсяном?»','«Я тут по фрилансу ем.»'],
+        boss:['«Отчёт на стол!»','«Кто съел греческий салат без согласования?»']
+      }[e.type]||['Эм…'];
+      addText(e.x, e.y- e.h - 24, lines[Math.floor(Math.random()*lines.length)], '#c6d6f5');
+    }
+  }
+
+  // столкновение удара ногой
+  if (player.state==='kick'){
+    const foot = {x:player.x + player.face*30, y:player.y-20, w:26, h:20};
+    for (const e of [...enemies]){
+      if (rectsOverlap(foot,e)){ damageEnemy(e, e.type==='boss'?12:22, 4); }
+    }
+  }
+
+  // частицы/тексты
+  for (const p of particles){ p.x+=p.vx*2; p.y+=p.vy*2; p.vy+=0.1; p.life-=dt*0.9; }
+  for (const t of texts){ t.y-=0.3; t.life-=dt*0.5; }
+  while(particles.length && particles[0].life<=0) particles.shift();
+  while(texts.length && texts[0].life<=0) texts.shift();
+
+  // UI
+  document.getElementById('hpbar').style.width = (player.hp/player.maxHp*100)+'%';
+  document.getElementById('dist').textContent = Math.floor(G.dist)+'м';
+  document.getElementById('tips').textContent = G.tips;
+  document.getElementById('wave').textContent = G.wave;
+}
+
+/* ---------- Рендер ---------- */
+function render(){
+  ctx.clearRect(0,0,canvas.clientWidth,canvas.clientHeight);
+  drawBackground();
+
+  // сущности
+  for (const e of enemies) drawEntity(e);
+  drawEntity(player);
+
+  // частицы
+  for (const p of particles){
+    ctx.globalAlpha = Math.max(0, p.life);
+    ctx.fillStyle = p.col || '#9affb1'; ctx.fillRect(p.x-G.camX, p.y, 4,4);
+    ctx.globalAlpha = 1;
+  }
+  // всплывающие тексты
+  ctx.font='bold 14px system-ui'; ctx.textBaseline='middle';
+  for (const t of texts){
+    ctx.globalAlpha = Math.max(0, t.life);
+    ctx.fillStyle=t.col; ctx.fillText(t.msg, t.x-G.camX, t.y);
+    ctx.globalAlpha=1;
+  }
+
+  // хитбокс удара (мигнём)
+  if (player.state==='kick' && player.kickT>0.15){
+    const x = player.x + player.face*30, y = player.y-20;
+    ctx.globalAlpha=0.25; ctx.fillStyle='#9affb1'; ctx.fillRect(x-13-G.camX, y-10, 26, 20); ctx.globalAlpha=1;
+  }
+}
+
+/* ---------- Игровой цикл ---------- */
+let last=performance.now();
+function loop(now){
+  const dt = Math.min(0.033, (now-last)/1000); last=now;
+  G.dt=dt;
+  update(dt);
+  render();
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+
+/* ---------- Вспомогательное ---------- */
+function gameOver(win){
+  if (G.gameOver) return;
+  G.gameOver=true; G.win=win;
+  const modal = document.getElementById('modal');
+  const t = document.getElementById('m-title'), m=document.getElementById('m-text');
+  if (win){
+    t.textContent='ПОБЕДА! Екатерина отступила 🧁👠';
+    m.innerHTML=`Ты прошёл кухню GREKO. Чаевых: <b>${G.tips}</b>, дистанция: <b>${Math.floor(G.dist)}м</b>.
+                 <br>Екатерина пообещала пересмотреть KPI и выдать премию «За силу ног».`;
+    sfx('win'); confetti();
+  }else{
+    t.textContent='Проигрыш — тебя уволили 🧾';
+    m.innerHTML=`Здоровье закончилось. Но дух кондитера вечен. <br>Чаевые: <b>${G.tips}</b>, волна: <b>${G.wave}</b>.`;
+  }
+  modal.style.display='grid';
+}
+
+function startGame(){
+  document.getElementById('modal').style.display='none';
+  G.started=true; G.paused=false; G.gameOver=false; G.win=false;
+  // сброс
+  enemies.length=0; particles.length=0; texts.length=0; G.camX=0; G.dist=0; G.tips=0; G.wave=1; G.bossSpawned=false; spawnX=400;
+  Object.assign(player,{x:60,y:0,vx:0,vy:0,face:1,onGround:false,hp:100,inv:0,state:'idle',kickT:0});
+  // начальная пачка врагов
+  for(let i=0;i<4;i++) spawnEnemy(['chef','waiter','client'][i%3], 380+i*160);
+}
+
+function pauseToggle(){
+  if(!G.started||G.gameOver) return;
+  G.paused=!G.paused;
+  document.getElementById('btn-pause').textContent = G.paused?'Продолжить':'Пауза';
+}
+
+function confetti(n=80){
   for(let i=0;i<n;i++){
     const s=document.createElement('div');
     Object.assign(s.style,{
       position:'fixed', left:(Math.random()*100)+'%', top:'-10px',
       width:'6px', height:'10px', background:['#73f0ff','#9affb1','#ffd36d','#ff9b7c'][i%4],
-      transform:`rotate(${Math.random()*360}deg)`,
-      borderRadius:'2px', zIndex:9999, opacity:1, transition:'transform 1.2s linear, top 1.2s linear, opacity 1.2s'
+      transform:`rotate(${Math.random()*360}deg)`, borderRadius:'2px', zIndex:9999,
+      transition:'transform 1.2s linear, top 1.2s linear, opacity 1.2s'
     });
     document.body.appendChild(s);
     requestAnimationFrame(()=>{
-      s.style.top='110%';
-      s.style.transform=`translateY(90vh) rotate(${720+Math.random()*720}deg)`;
-      s.style.opacity=0.8;
+      s.style.top='110%'; s.style.transform=`translateY(90vh) rotate(${720+Math.random()*720}deg)`; s.style.opacity=0.85;
     });
     setTimeout(()=>s.remove(),1300);
   }
 }
 
-/* Сохранение */
-const KEY='greko-clicker-save';
-function save(){ localStorage.setItem(KEY, JSON.stringify(S)); document.getElementById('saveLabel').textContent='вкл'; }
-function load(){
-  try{ const raw=localStorage.getItem(KEY); if(!raw) return; const o=JSON.parse(raw); Object.assign(S,o); }catch(e){}
+/* ---------- События ввода ---------- */
+window.addEventListener('keydown', e=>{
+  if (e.repeat) return;
+  if (e.code==='ArrowLeft'||e.code==='KeyA') input.left=true;
+  if (e.code==='ArrowRight'||e.code==='KeyD') input.right=true;
+  if (e.code==='ArrowUp'||e.code==='KeyW') input.up=true;
+  if (e.code==='Space'){ e.preventDefault(); input.attack=true; }
+  if (e.code==='KeyP') pauseToggle();
+});
+window.addEventListener('keyup', e=>{
+  if (e.code==='ArrowLeft'||e.code==='KeyA') input.left=false;
+  if (e.code==='ArrowRight'||e.code==='KeyD') input.right=false;
+  if (e.code==='ArrowUp'||e.code==='KeyW') input.up=false;
+  if (e.code==='Space') input.attack=false;
+});
+
+function bindTouch(id, key){
+  const el=document.getElementById(id);
+  const down=()=>{ input[key]=true; el.style.filter='brightness(1.2)'; };
+  const up=()=>{ input[key]=false; el.style.filter=''; };
+  ['pointerdown','touchstart','mousedown'].forEach(ev=>el.addEventListener(ev,down));
+  ['pointerup','pointerleave','touchend','mouseup','touchcancel'].forEach(ev=>el.addEventListener(ev,up));
 }
+bindTouch('mv-left','left'); bindTouch('mv-right','right'); bindTouch('mv-jump','up'); bindTouch('mv-kick','attack');
 
-/* UI bind */
-document.getElementById('btn-stir').onclick=stir;
-document.getElementById('btn-enz').onclick=toggleEnz;
-document.getElementById('btn-win').onclick=tryWin;
-document.getElementById('btn-reset').onclick=()=>{ if(confirm('Сбросить прогресс?')){ localStorage.removeItem(KEY); location.reload(); } };
-document.getElementById('btn-pause').onclick=(e)=>{ if(S.speed>0){S._ps=S.speed;S.speed=0;e.target.textContent='Продолжить'}else{S.speed=S._ps||1;e.target.textContent='Пауза'} };
-document.getElementById('m-continue').onclick=()=>hideModal();
-document.getElementById('m-reset').onclick=()=>{ localStorage.removeItem(KEY); location.reload(); };
-Array.from(document.querySelectorAll('[data-speed]')).forEach(b=>b.onclick=()=>{ S.speed=Number(b.dataset.speed); document.getElementById('speedLabel').textContent=S.speed+'×'; });
+/* ---------- Кнопки UI ---------- */
+document.getElementById('btn-start').onclick=()=>{ startGame(); toast('Поехали! Удар ногой — Space'); };
+document.getElementById('btn-restart').onclick=()=>startGame();
+document.getElementById('btn-pause').onclick=pauseToggle;
+document.getElementById('m-go').onclick=()=>{ startGame(); };
+document.getElementById('m-close').onclick=()=>{ document.getElementById('modal').style.display='none'; };
 
-/* init */
-load(); drawUpgrades(); refresh(); log('Добро пожаловать в GREKO. Мы не кладём «любовь» — у нас кончилась на прошлой неделе.');
-
-let last=performance.now();
-function loop(now){ const dt=now-last; last=now; if(S.speed>0){ tick(dt); if(Math.floor(S.t)%4000===0) save(); } requestAnimationFrame(loop); }
-requestAnimationFrame(loop);
+/* Показать приветствие */
+document.getElementById('modal').style.display='grid';
 </script>
 </body>
 </html>
