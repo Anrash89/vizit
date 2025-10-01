@@ -1,594 +1,440 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>GREKO: Сладкий Бой — Конфетчик против всех</title>
-<style>
-  :root{
-    --bg1:#071428; --bg2:#0b1f3f; --ink:#eaf2ff; --muted:#9fb3d8;
-    --line:#274170; --card:#0e1f3d; --accent:#73f0ff; --accent2:#9affb1; --gold:#ffd36d;
-    --ok:#32d39c; --warn:#ff9b7c; --danger:#ff5670;
+  <meta charset="utf-8">
+  <title>SPRING — Поставки из Китая под ключ: логистика, таможня, маркетплейсы</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="SPRING — помогаем производителям и брендам поставлять товары в Россию: от фабрики в Китае до продажи. Логистика, сертификация, таможня, фулфилмент, запуск на маркетплейсах.">
+  <meta property="og:title" content="SPRING — Поставки из Китая под ключ">
+  <meta property="og:description" content="От фабрики до полки: логистика, сертификация, таможня, фулфилмент, маркетплейсы.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://via.placeholder.com/1200x630.png?text=SPRING">
+  <meta name="theme-color" content="#0ea5e9">
+  <style>
+    :root{
+      --bg:#0b1220;
+      --card:#0f172a;
+      --muted:#94a3b8;
+      --text:#e5e7eb;
+      --accent:#0ea5e9;
+      --accent-2:#22c55e;
+      --warning:#f59e0b;
+      --danger:#ef4444;
+      --ring:0 0 0 3px rgba(14,165,233,.35);
+      --radius:18px;
+      --shadow:0 10px 30px rgba(2,6,23,.5), inset 0 1px 0 rgba(255,255,255,.05);
+      --grad:linear-gradient(135deg,#0ea5e9 0%, #22c55e 100%);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;height:100%;background:radial-gradient(1200px 600px at 80% -10%,rgba(14,165,233,.15),transparent 60%), radial-gradient(900px 500px at -10% 10%,rgba(34,197,94,.12),transparent 60%), var(--bg); color:var(--text); font:500 16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial}
+    a{color:var(--text);text-decoration:none}
+    .container{max-width:1200px;margin:0 auto;padding:0 20px}
+    .grid{display:grid;gap:20px}
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:14px 18px;border-radius:12px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.02);backdrop-filter:blur(6px);box-shadow:var(--shadow);transition:all .2s ease; cursor:pointer}
+    .btn:hover{transform:translateY(-1px); border-color:rgba(255,255,255,.18)}
+    .btn.primary{background:var(--grad); color:#001014; border:none}
+    .btn.secondary{background:rgba(255,255,255,.05)}
+    .chip{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:rgba(14,165,233,.15);color:#bfeaff;border:1px solid rgba(14,165,233,.35)}
+    .badge{font-size:12px;color:#9aa7bd}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02)); border:1px solid rgba(255,255,255,.08); border-radius:var(--radius); box-shadow:var(--shadow)}
+    .card.pad{padding:22px}
+    .section{padding:64px 0}
+    .h1{font-size:46px;line-height:1.1;margin:0 0 16px}
+    .h2{font-size:28px;margin:0 0 16px}
+    .h3{font-size:20px;margin:0 0 10px}
+    .muted{color:var(--muted)}
+    .list{display:grid;gap:12px;margin:0;padding:0;list-style:none}
+    .list li{display:flex;gap:10px;align-items:flex-start}
+    .tick{width:22px;height:22px;flex:0 0 22px;border-radius:6px;background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.35);display:grid;place-items:center}
+    .tick:before{content:"✓";color:#bff7cf;font-weight:900}
+    .danger{color:#ffb4ae}
+    .grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .hero{padding:96px 0 56px;position:relative;overflow:hidden}
+    .hero .sub{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+    .hero .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+    .marquee{display:flex;gap:26px;overflow:auto;padding:12px 0;scrollbar-width:none}
+    .kpi{display:flex;gap:22px;flex-wrap:wrap;margin-top:16px}
+    .kpi .item{padding:14px 16px;border-radius:14px;background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08)}
+    .pill{font-weight:700;font-size:18px}
+    .logo-bar{display:grid;grid-auto-flow:column;gap:20px;opacity:.85}
+    .logo{height:36px; width:130px; border-radius:10px; display:grid; place-items:center; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); color:#c9d5ea}
+    .steps{counter-reset:st}
+    .step{position:relative;padding-left:56px}
+    .step:before{counter-increment:st;content:counter(st);position:absolute;left:0;top:0;width:40px;height:40px;border-radius:12px;background:rgba(14,165,233,.2);border:1px solid rgba(14,165,233,.35);display:grid;place-items:center;font-weight:800;color:#cfeeff}
+    form{display:grid;gap:12px}
+    input,select,textarea{width:100%;padding:13px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.25);color:var(--text);outline:none}
+    input:focus,select:focus,textarea:focus{box-shadow:var(--ring); border-color:rgba(14,165,233,.5)}
+    label{font-size:14px;color:#c9d5ea}
+    .two{display:grid;gap:12px;grid-template-columns:1fr 1fr}
+    .faq details{background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:14px; padding:14px}
+    .faq summary{cursor:pointer;font-weight:700}
+    .footer{border-top:1px solid rgba(255,255,255,.08); padding:28px 0; color:#9fb0c9}
+    .ribbon{position:absolute;inset:auto 0 -1px 0;height:120px;background:radial-gradient(800px 120px at 50% -10%,rgba(14,165,233,.35),transparent 60%)}
+    .tag{font-size:12px;padding:4px 8px;border-radius:999px;background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.08)}
+    .case{display:grid;gap:10px}
+    .case .num{font-weight:900;color:#d4ffde}
+    .guarantees{display:grid;gap:16px}
+    .guarantees .g{display:flex;gap:12px;align-items:flex-start}
+    .g .s{width:22px;height:22px;border-radius:6px;background:rgba(99,102,241,.2);border:1px solid rgba(99,102,241,.35);display:grid;place-items:center}
+    .g .s:before{content:"★";font-size:12px;color:#cfd4ff}
+    .note{font-size:12px;color:#a9b6cd}
+    /* responsive */
+    @media (max-width:960px){
+      .grid-3{grid-template-columns:1fr}
+      .grid-2{grid-template-columns:1fr}
+      .h1{font-size:36px}
+      .two{grid-template-columns:1fr}
+    }
+  </style>
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Organization",
+    "name":"SPRING",
+    "description":"Поставки из Китая под ключ: логистика, сертификация, таможня, фулфилмент и маркетплейсы.",
+    "url":"https://silicones.springingredients.ru/",
+    "logo":"https://via.placeholder.com/300x300.png?text=SPRING",
+    "sameAs":[],
+    "address":{"@type":"PostalAddress","addressCountry":"RU"},
+    "contactPoint":[{"@type":"ContactPoint","contactType":"sales","telephone":"+7-000-000-00-00","email":"sales@spring.example"}]
   }
-  *{box-sizing:border-box} html,body{height:100%}
-  body{
-    margin:0; color:var(--ink); font:16px/1.45 system-ui,Segoe UI,Roboto,Arial;
-    background:
-      radial-gradient(1200px 700px at 70% -10%, #18335e 0%, transparent 60%),
-      radial-gradient(900px 500px at -10% 30%, #142a4f 0%, transparent 60%),
-      linear-gradient(180deg,var(--bg1),var(--bg2));
-    background-attachment:fixed; overflow:hidden;
-  }
-  header{
-    display:flex; align-items:center; justify-content:space-between; gap:16px;
-    padding:12px 14px; border-bottom:1px solid var(--line);
-  }
-  .title{display:flex; gap:12px; align-items:center}
-  .logo{width:44px;height:44px;border-radius:12px;
-    background:
-      radial-gradient(circle at 35% 35%, #ffd36d 0 40%, #b65c00 42% 48%, transparent 50%),
-      conic-gradient(#ffaa00,#ff7b00,#ff4d00,#ffaa00);
-    box-shadow:0 0 22px rgba(255,209,109,.35), 0 6px 18px #0008; border:1px solid #ffb13f66;
-  }
-  h1{margin:0;font-size:18px;letter-spacing:.4px}
-  .neon{
-    color:var(--accent);
-    text-shadow:0 0 6px rgba(115,240,255,.9),0 0 16px rgba(115,240,255,.6),0 0 28px rgba(115,240,255,.35);
-    animation:glow 3s ease-in-out infinite;
-  }
-  @keyframes glow{0%,100%{filter:drop-shadow(0 0 0 rgba(115,240,255,.6))}50%{filter:drop-shadow(0 0 10px rgba(115,240,255,.9))}}
-  .sub{font-size:12px;color:var(--muted)}
-
-  .hud{
-    position:fixed; left:12px; top:64px; display:flex; gap:10px; align-items:center; z-index:5;
-    background:#0b1730aa; border:1px solid var(--line); border-radius:12px; padding:6px 10px; backdrop-filter:blur(2px)
-  }
-  .bar{height:12px;background:#0b1730;border:1px solid var(--line);border-radius:999px;overflow:hidden;width:160px}
-  .bar > i{display:block;height:100%; background:linear-gradient(90deg,var(--accent),#58ffa3)}
-  .bar.danger>i{background:linear-gradient(90deg,#ffb37b,#ff6b6b)}
-  .tag{padding:4px 8px;border:1px solid var(--line);border-radius:999px;font-size:12px;color:#c6d6f5}
-
-  .panel{
-    position:fixed; right:12px; top:64px; z-index:5; display:flex; gap:6px; flex-wrap:wrap;
-  }
-  .btn{
-    cursor:pointer; border:1px solid var(--line); background:#0d1830; color:var(--ink);
-    padding:8px 10px; border-radius:10px; font-weight:800; box-shadow:0 3px 12px #0007;
-  }
-  .btn:hover{filter:brightness(1.1)}
-  .btn-warn{background:#2c1620;border-color:#5a2942}
-  .btn-acc{background:#0c2232;border-color:#1c405a}
-  .btn-ok{background:#11281f;border-color:#2f5a41}
-
-  .wrap{position:relative; width:100%; height:calc(100% - 72px)}
-  canvas{position:absolute; inset:0; width:100%; height:100%}
-
-  .toast{
-    position:fixed; left:50%; top:18px; transform:translateX(-50%);
-    background:#0b1830; border:1px solid var(--line); padding:10px 14px; border-radius:12px;
-    font-weight:800; box-shadow:0 10px 30px #0009; opacity:0; pointer-events:none;
-    transition:.3s opacity, .3s transform; z-index:10;
-  }
-  .toast.show{opacity:1; transform:translateX(-50%) translateY(4px)}
-
-  .modal{position:fixed;inset:0;display:none;place-items:center;background:rgba(6,10,20,.65);backdrop-filter:blur(3px);z-index:20}
-  .box{max-width:640px;background:#0e1f3d;border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 16px 44px #000a}
-  .box h3{margin:.2rem 0 .4rem}
-  .hint{color:var(--muted)}
-
-  /* Мобильные кнопки */
-  .mobile{
-    position:fixed; bottom:14px; left:14px; right:14px; display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:10px; z-index:6;
-  }
-  .mb{background:#0b1730b0; border:1px solid var(--line); border-radius:12px; padding:16px; text-align:center; font-weight:900; box-shadow:0 8px 24px #0008; user-select:none}
-  .noselect{user-select:none;-webkit-user-select:none}
-  @media (min-width:900px){ .mobile{display:none} }
-</style>
+  </script>
 </head>
 <body>
-<header>
-  <div class="title">
-    <div class="logo"></div>
-    <div>
-      <h1 class="neon">GREKO: СЛАДКИЙ БОЙ — Конфетчик идёт вперёд</h1>
-      <div class="sub">Иди направо, раздавай <b>удары ногой</b>, собирай чаевые и шути. Финальный босс — Директор Екатерина.</div>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="container">
+      <div class="sub">
+        <span class="chip">10+ лет в B2B</span>
+        <span class="chip">Склады и растаможка</span>
+        <span class="chip">Запуск на маркетплейсах</span>
+      </div>
+      <h1 class="h1">От фабрики в Китае — до продаж в РФ. <br>Под ключ и с гарантией сроков.</h1>
+      <p class="muted">Берём ответственность за весь цикл: поиск фабрики, контракт, сертификация, логистика, таможня, фулфилмент и вывод на маркетплейсы. Вы — получаете продажи без «узких мест».</p>
+      <div class="cta">
+        <a href="#lead" class="btn primary">Получить предложение за 24 часа</a>
+        <a href="#supplier" class="btn secondary">Я поставщик / фабрика</a>
+      </div>
+      <div class="kpi">
+        <div class="item"><div class="pill">99,2%</div><div class="badge">Соблюдение сроков поставок</div></div>
+        <div class="item"><div class="pill">120+</div><div class="badge">Брендов и торговых компаний</div></div>
+        <div class="item"><div class="pill">48 ч</div><div class="badge">Средний срок запуска пилота</div></div>
+      </div>
+
+      <div class="section">
+        <div class="logo-bar">
+          <div class="logo">Логотип 1</div><div class="logo">Логотип 2</div><div class="logo">Логотип 3</div><div class="logo">Логотип 4</div><div class="logo">Логотип 5</div>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="panel">
-    <button class="btn btn-acc" id="btn-start">Старт</button>
-    <button class="btn btn-acc" id="btn-pause">Пауза</button>
-    <button class="btn btn-warn" id="btn-restart">Рестарт</button>
-  </div>
-</header>
+    <div class="ribbon"></div>
+  </header>
 
-<div class="hud noselect">
-  <span class="tag">Дистанция: <b id="dist">0м</b></span>
-  <span class="tag">Чаевые: <b id="tips">0</b></span>
-  <span class="tag">Волна: <b id="wave">1</b></span>
-  <div class="tag">Здоровье&nbsp;</div>
-  <div class="bar danger"><i id="hpbar" style="width:100%"></i></div>
-</div>
-
-<div class="wrap"><canvas id="c"></canvas></div>
-
-<div class="mobile">
-  <div class="mb" id="mv-left">←</div>
-  <div class="mb" id="mv-right">→</div>
-  <div class="mb" id="mv-jump">↑</div>
-  <div class="mb" id="mv-kick">🦵</div>
-</div>
-
-<div class="toast" id="toast">+1</div>
-
-<div class="modal" id="modal">
-  <div class="box">
-    <h3 id="m-title">Добро пожаловать в GREKO!</h3>
-    <p id="m-text" class="hint">
-      Управление: <b>A/←</b> и <b>D/→</b> — ходьба, <b>W/↑</b> — прыжок, <b>Space</b> — удар ногой, <b>P</b> — пауза.<br>
-      Разбери ресторан: повара, официанты, вредные клиенты… В финале выйдет <b>Директор Екатерина</b> — держись!
-    </p>
-    <div style="display:flex;gap:8px;flex-wrap:wrap">
-      <button class="btn btn-ok" id="m-go">Поехали!</button>
-      <button class="btn btn-warn" id="m-close">Закрыть</button>
+  <!-- БОЛИ / РЕШЕНИЯ -->
+  <section class="section">
+    <div class="container grid grid-2">
+      <div class="card pad">
+        <h2 class="h2">Ваши задачи и риски</h2>
+        <ul class="list">
+          <li><span class="tick"></span><div><strong>Сертификация и соответствие</strong><br><span class="muted">ГОСТ, ТР ТС, маркировка — ошибки бьют по срокам и бюджету.</span></div></li>
+          <li><span class="tick"></span><div><strong>Логистика и таможня</strong><br><span class="muted">Непрозрачные ставки, простои, доп. расходы.</span></div></li>
+          <li><span class="tick"></span><div><strong>Качество фабрики</strong><br><span class="muted">Сбой партии = возврат/штрафы/репутационные риски.</span></div></li>
+          <li><span class="tick"></span><div><strong>Запуск продаж</strong><br><span class="muted">Нужны контент, карточки, цены, фулфилмент, реклама.</span></div></li>
+        </ul>
+      </div>
+      <div class="card pad">
+        <h2 class="h2">Как мы решаем</h2>
+        <ul class="list">
+          <li><span class="tick"></span><div><strong>Под ключ</strong><br><span class="muted">От выбора фабрики до первой выручки — один подрядчик и SLA.</span></div></li>
+          <li><span class="tick"></span><div><strong>Прозрачная экономика</strong><br><span class="muted">Смета и график. Фиксируем риски, страхуем груз.</span></div></li>
+          <li><span class="tick"></span><div><strong>QC/QA на фабрике</strong><br><span class="muted">Чек-листы, инспекции AQL, фотопробы, пред-шипмент.</span></div></li>
+          <li><span class="tick"></span><div><strong>Запуск и масштаб</strong><br><span class="muted">Карточки, контент, FBO/FBS, реклама — под KPI.</span></div></li>
+        </ul>
+      </div>
     </div>
-  </div>
-</div>
+  </section>
 
-<script>
-/* ==========================================================
-   GREKO: Сладкий Бой — чистый Canvas, без ассетов
-   by you + a friendly AI. Все рисуется кодом.
-   ========================================================== */
+  <!-- НАПРАВЛЕНИЯ / КАТЕГОРИИ -->
+  <section class="section">
+    <div class="container">
+      <h2 class="h2">Что поставляем</h2>
+      <p class="muted">Работаем по белым схемам. Примеры категорий — не ограничение: запросим под ваш бриф.</p>
+      <div class="grid grid-3">
+        <div class="card pad">
+          <div class="tag">Топ-категория</div>
+          <h3 class="h3">Товары для дома</h3>
+          <p class="muted">Органайзеры, текстиль, хозтовары, посуда. Под ваши бренд-гайдлайны.</p>
+        </div>
+        <div class="card pad">
+          <div class="tag">Hit</div>
+          <h3 class="h3">Электроника и аксессуары</h3>
+          <p class="muted">ЗУ, кабели, мелкая электроника, персональные гаджеты (сертификация включена).</p>
+        </div>
+        <div class="card pad">
+          <div class="tag">Private Label</div>
+          <h3 class="h3">Красота и уход</h3>
+          <p class="muted">Упаковка, рецептуры, контракты; соответствие требованиям безопасности.</p>
+        </div>
+        <div class="card pad">
+          <h3 class="h3">Детские товары</h3>
+          <p class="muted">Игрушки, развивающие, текстиль. Усиленный контроль безопасности.</p>
+        </div>
+        <div class="card pad">
+          <h3 class="h3">Спорт и отдых</h3>
+          <p class="muted">Туризм, вело-аксессуары, коврики, бутылки. Брендинг, комплектность.</p>
+        </div>
+        <div class="card pad">
+          <h3 class="h3">ПЭТ/Силиконы/Сырьё</h3>
+          <p class="muted">Импорт сырья и компонентов. Тех. паспорта, лоты, тестовые партии.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-const DPR = Math.min(2, window.devicePixelRatio || 1);
-const canvas = document.getElementById('c');
-const ctx = canvas.getContext('2d');
+  <!-- КЕЙСЫ -->
+  <section class="section">
+    <div class="container">
+      <h2 class="h2">Кейсы и цифры</h2>
+      <div class="grid grid-3">
+        <div class="card pad case">
+          <div class="tag">Дом/Органайзеры</div>
+          <div><span class="num">+312%</span> оборот за 5 месяцев</div>
+          <p class="muted">PL-линейка, 14 SKU, запуск FBO, фото/видео контент, таргет в карточках.</p>
+        </div>
+        <div class="card pad case">
+          <div class="tag">Электроника</div>
+          <div><span class="num">-18 дней</span> к срокам поставки</div>
+          <p class="muted">Оптимизирован маршрут, консолидирован контейнер, AQL-контроль.</p>
+        </div>
+        <div class="card pad case">
+          <div class="tag">Сырьё</div>
+          <div><span class="num">—12%</span> себестоимость партии</div>
+          <p class="muted">Переговоры по контракту, альтернативная фабрика, долгосрочный прайс.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-function resize(){
-  const w = canvas.clientWidth, h = canvas.clientHeight;
-  canvas.width = Math.floor(w * DPR);
-  canvas.height = Math.floor(h * DPR);
-  ctx.setTransform(DPR,0,0,DPR,0,0);
-}
-window.addEventListener('resize', resize);
-resize();
+  <!-- ПРОЦЕСС -->
+  <section class="section">
+    <div class="container grid grid-3 steps">
+      <div class="card pad step">
+        <h3 class="h3">Бриф и просчёт</h3>
+        <p class="muted">Получаем параметры товара, цели по цене и срокам. Даём смету за 24 часа.</p>
+      </div>
+      <div class="card pad step">
+        <h3 class="h3">Фабрика и образцы</h3>
+        <p class="muted">Подбор и проверка. Образцы/фотопробы. Согласуем контракт и SLA.</p>
+      </div>
+      <div class="card pad step">
+        <h3 class="h3">Производство и QC</h3>
+        <p class="muted">Чек-листы, инспекции, пред-шипмент. Сертификация и маркировка.</p>
+      </div>
+      <div class="card pad step">
+        <h3 class="h3">Логистика и таможня</h3>
+        <p class="muted">Оптимальный маршрут, страхование, растаможка без «сюрпризов».</p>
+      </div>
+      <div class="card pad step">
+        <h3 class="h3">Фулфилмент</h3>
+        <p class="muted">Склад, стикеровка, комплектация, отгрузка FBO/FBS.</p>
+      </div>
+      <div class="card pad step">
+        <h3 class="h3">Запуск продаж</h3>
+        <p class="muted">Карточки, контент и реклама под KPI. Репортинг еженедельно.</p>
+      </div>
+    </div>
+  </section>
 
-/* ---------- Утилиты ---------- */
-const rand = (a,b)=>a+Math.random()*(b-a);
-const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
-const ease=(t)=>t<.5?2*t*t:-1+(4-2*t)*t;
+  <!-- ГАРАНТИИ / ДОВЕРИЕ -->
+  <section class="section">
+    <div class="container grid grid-2">
+      <div class="card pad guarantees">
+        <h2 class="h2">Гарантии</h2>
+        <div class="g"><div class="s"></div><div><strong>Фикс-сроки и страхование</strong><br><span class="muted">SLA по ключевым этапам. Страхование груза.</span></div></div>
+        <div class="g"><div class="s"></div><div><strong>Прозрачная смета</strong><br><span class="muted">Никаких скрытых платежей. Вся экономика в одном файле.</span></div></div>
+        <div class="g"><div class="s"></div><div><strong>QC/AQL</strong><br><span class="muted">Инспекции на фабрике. Фото/видео отчёты.</span></div></div>
+      </div>
+      <div class="card pad">
+        <h2 class="h2">Лид-магнит</h2>
+        <p class="muted">Получите бесплатный мини-аудит: подберём фабрики, прикинем себестоимость и сроки, дадим план запуска.</p>
+        <a class="btn primary" href="#lead">Запросить мини-аудит</a>
+        <p class="note">* Ответим в течение 24 часов в рабочие дни.</p>
+      </div>
+    </div>
+  </section>
 
-function sfx(type){
-  try{
-    const ac = sfx.ac||(sfx.ac=new (window.AudioContext||window.webkitAudioContext)());
-    const o = ac.createOscillator(), g = ac.createGain();
-    o.connect(g); g.connect(ac.destination);
-    const preset = {
-      kick:[220,0.05,0.12], hit:[440,0.02,0.08], hurt:[110,0.04,0.25],
-      coin:[880,0.03,0.1], win:[660,0.04,0.5]
-    }[type] || [330,0.03,0.12];
-    o.frequency.value=preset[0]; g.gain.value=preset[1];
-    o.start(); g.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime+preset[2]); o.stop(ac.currentTime+preset[2]);
-  }catch(e){}
-}
+  <!-- ФОРМА ЛИДОВ (КЛИЕНТЫ) -->
+  <section id="lead" class="section">
+    <div class="container grid grid-2">
+      <div class="card pad">
+        <h2 class="h2">Получить предложение</h2>
+        <p class="muted">Заполните 6 полей — вернёмся с расчётом и шагами запуска.</p>
+        <form id="leadForm" novalidate>
+          <div class="two">
+            <div>
+              <label>Имя*</label>
+              <input required name="name" placeholder="Иван Петров">
+            </div>
+            <div>
+              <label>Компания*</label>
+              <input required name="company" placeholder="ООО «Пример»">
+            </div>
+          </div>
+          <div class="two">
+            <div>
+              <label>E-mail*</label>
+              <input required type="email" name="email" placeholder="you@company.com">
+            </div>
+            <div>
+              <label>Телефон (мессенджер)</label>
+              <input name="phone" placeholder="+7 9XX XXX-XX-XX">
+            </div>
+          </div>
+          <div>
+            <label>Категория товара*</label>
+            <select required name="category">
+              <option value="">Выберите…</option>
+              <option>Дом и быт</option>
+              <option>Электроника</option>
+              <option>Красота и уход</option>
+              <option>Детские товары</option>
+              <option>Спорт и отдых</option>
+              <option>Сырьё / компоненты</option>
+              <option>Другое</option>
+            </select>
+          </div>
+          <div>
+            <label>Комментарий / цели</label>
+            <textarea rows="4" name="comment" placeholder="Целевая себестоимость, сроки, объёмы, требования к упаковке и т.д."></textarea>
+          </div>
+          <button class="btn primary" type="submit">Отправить и получить смету</button>
+          <div class="note">Нажимая «Отправить», вы соглашаетесь с обработкой персональных данных.</div>
+          <div id="leadMsg" class="badge"></div>
+        </form>
+      </div>
+      <div class="card pad">
+        <h2 class="h2">Почему мы</h2>
+        <ul class="list">
+          <li><span class="tick"></span><div>Единая ответственность за весь цикл — проще управлять рисками и сроками.</div></li>
+          <li><span class="tick"></span><div>80% проектов окупают логистику на первой поставке за счёт оптимизации себестоимости.</div></li>
+          <li><span class="tick"></span><div>Понимаем маркетплейсы: создаём карточки, контент, ведём рекламу.</div></li>
+          <li><span class="tick"></span><div>Работаем по договору, с понятными KPI и отчётностью.</div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-function toast(t){
-  const el = document.getElementById('toast');
-  el.textContent = t; el.classList.add('show');
-  setTimeout(()=>el.classList.remove('show'),600);
-}
+  <!-- ФОРМА ДЛЯ ПОСТАВЩИКОВ -->
+  <section id="supplier" class="section">
+    <div class="container grid grid-2">
+      <div class="card pad">
+        <h2 class="h2">Я поставщик / фабрика</h2>
+        <p class="muted">Готовы расширить сбыт в РФ? Представьтесь — вышлем требования к листингу и стартуем пилот.</p>
+        <form id="supForm" novalidate>
+          <div class="two">
+            <div>
+              <label>Контактное лицо*</label>
+              <input required name="name" placeholder="John Zhang">
+            </div>
+            <div>
+              <label>Компания*</label>
+              <input required name="company" placeholder="Shenzhen *** Co., Ltd">
+            </div>
+          </div>
+          <div class="two">
+            <div>
+              <label>E-mail*</label>
+              <input required type="email" name="email" placeholder="sales@factory.com">
+            </div>
+            <div>
+              <label>WhatsApp/WeChat</label>
+              <input name="im" placeholder="+86… / wechat id">
+            </div>
+          </div>
+          <div>
+            <label>Категория / продукт*</label>
+            <input required name="product" placeholder="Например: Silicone bakeware / PET resin">
+          </div>
+          <div>
+            <label>MOQ / сертификаты</label>
+            <textarea rows="3" name="details" placeholder="MOQ, lead time, сертификаты, фото-ссылка"></textarea>
+          </div>
+          <button class="btn secondary" type="submit">Отправить информацию</button>
+          <div id="supMsg" class="badge"></div>
+        </form>
+      </div>
+      <div class="card pad">
+        <h2 class="h2">FAQ</h2>
+        <div class="faq list">
+          <details open>
+            <summary>Работаете по белым схемам?</summary>
+            <div class="muted">Да. Официальные договоры, сертификация и таможенное оформление.</div>
+          </details>
+          <details>
+            <summary>Можно начать с тестовой партии?</summary>
+            <div class="muted">Да, есть пилотные поставки от небольших объёмов при сохранении SLA.</div>
+          </details>
+          <details>
+            <summary>Срок оценки запроса?</summary>
+            <div class="muted">Бриф → смета в течение 24 часов (рабочие дни).</div>
+          </details>
+          <details>
+            <summary>Берёте маркетплейсы под ключ?</summary>
+            <div class="muted">Да: контент, карточки, запуск рекламы, аналитика, фулфилмент.</div>
+          </details>
+        </div>
+      </div>
+    </div>
+  </section>
 
-/* ---------- Игровые объекты ---------- */
-const G = {
-  started:false, paused:false, t:0, dt:0,
-  camX:0, dist:0, tips:0, wave:1,
-  ground:0, width:0, height:0, bossSpawned:false, gameOver:false, win:false
-};
+  <!-- ФУТЕР -->
+  <footer class="footer">
+    <div class="container grid grid-2">
+      <div>
+        <strong>SPRING</strong> — импорт, логистика и запуск продаж под ключ.
+        <div class="muted" style="margin-top:6px">© <span id="year"></span> SPRING. Все права защищены.</div>
+      </div>
+      <div style="text-align:right">
+        <a href="#lead" class="btn primary">Начать проект</a>
+      </div>
+    </div>
+  </footer>
 
-const input = {left:false,right:false,up:false,attack:false};
+  <script>
+    // Текущий год
+    document.getElementById('year').textContent = new Date().getFullYear();
 
-const player = {
-  x:40, y:0, vx:0, vy:0, w:36, h:64, face:1,
-  onGround:false, hp:100, maxHp:100, inv:0,
-  state:'idle', kickT:0
-};
-
-const enemies = []; const particles = []; const texts = [];
-
-function addText(x,y,msg,col='#eaf2ff'){ texts.push({x,y,msg,life:1,col}) }
-function addParticle(x,y,col){ particles.push({x,y,vx:rand(-1,1),vy:rand(-2,-0.5),life:1,col}) }
-
-function spawnEnemy(type, x){
-  const base = {type, x, y:0, vx:-rand(0.8,1.6), w:34, h:56, hp:20, maxHp:20, dmg:8, cd:0, talkT:rand(2,6), name:''};
-  if (type==='chef'){ base.w=38; base.h=62; base.hp=28; base.maxHp=28; base.dmg=10; base.vx=-rand(0.6,1.1); base.name='Повар'; }
-  else if (type==='waiter'){ base.w=32; base.h=58; base.hp=18; base.maxHp=18; base.vx=-rand(1.1,1.8); base.dmg=7; base.name='Официант'; }
-  else if (type==='client'){ base.w=30; base.h=52; base.hp=14; base.maxHp=14; base.vx=-rand(0.7,1.3); base.dmg=6; base.name='Клиент'; }
-  enemies.push(base);
-}
-
-function spawnBossEkaterina(x){
-  const b = {type:'boss', name:'Директор Екатерина', x, y:0, vx:-1.2, w:70, h:90, hp:160, maxHp:160, dmg:14, cd:0, dashT:3, talkT:2};
-  enemies.push(b);
-  G.bossSpawned=true;
-  say('Екатерина: «Кто тут ногами махал? Штраф в виде пони!»');
-}
-
-function say(line){ addText(G.camX + 360, 60, line, '#9affb1'); }
-
-/* ---------- Окружение ---------- */
-function drawBackground(){
-  const W=G.width, H=G.height, x=G.camX;
-  ctx.save();
-  // дальняя стена
-  ctx.fillStyle='#0d1c36'; ctx.fillRect(0,0,W,H);
-  // плитка
-  ctx.fillStyle='#102444';
-  for(let i=0;i<W;i+=40){ for(let j=0;j<H;j+=32){
-    ctx.globalAlpha=0.25; ctx.fillRect(i-(x*0.05%40), j, 36, 28); ctx.globalAlpha=1;
-  }}
-  // вывеска GREKO
-  const signX = 120 - (x*0.2%300);
-  ctx.save();
-  ctx.translate(signX,80);
-  ctx.fillStyle='#0b1226'; ctx.fillRect(-20,-18,220,46); ctx.strokeStyle='#274170'; ctx.lineWidth=2; ctx.strokeRect(-20,-18,220,46);
-  ctx.font='bold 20px system-ui'; ctx.fillStyle='#73f0ff';
-  ctx.shadowColor='#73f0ff'; ctx.shadowBlur=20; ctx.fillText('GREKO • Κουζίνα', 0,12); ctx.shadowBlur=0;
-  ctx.restore();
-  // столы (параллакс)
-  ctx.fillStyle='#14294d';
-  for(let i=-100;i<W+200;i+=160){
-    const px = i - (x*0.45%160);
-    ctx.fillRect(px, H-120, 120, 10); // столешница
-    ctx.fillRect(px+8, H-110, 10, 50);
-    ctx.fillRect(px+100, H-110, 10, 50);
-  }
-  // пол
-  ctx.fillStyle='#0a152c'; ctx.fillRect(0,H-40,W,40);
-  ctx.strokeStyle='#274170'; ctx.beginPath(); ctx.moveTo(0,H-40.5); ctx.lineTo(W,H-40.5); ctx.stroke();
-  // пар из кастрюль
-  for(let i=0;i<3;i++){
-    const sx = (i*220 + 40) - (x*0.2%660);
-    ctx.globalAlpha=0.15; ctx.fillStyle='#eaf2ff';
-    ctx.beginPath(); ctx.ellipse(sx, H-150, 30, 18, 0, 0, Math.PI*2); ctx.fill();
-    ctx.globalAlpha=1;
-  }
-  ctx.restore();
-}
-
-function drawEntity(e){
-  ctx.save(); ctx.translate(e.x-G.camX, e.y);
-  // тень
-  ctx.fillStyle='rgba(0,0,0,.35)';
-  ctx.beginPath(); ctx.ellipse(0, e.h, e.w*0.6, 8, 0, 0, Math.PI*2); ctx.fill();
-
-  if (e===player){
-    // конфетчик — шапочка, фартук, анимированные ноги
-    const t = G.t*0.012, swing = e.onGround && Math.abs(e.vx)>0.1 ? Math.sin(t*8)*8 : 0;
-    const kick = e.state==='kick';
-    // тело
-    ctx.fillStyle='#1a325d'; ctx.fillRect(-12, -e.h+20, 24, e.h-20);
-    // фартук
-    ctx.fillStyle='#2b4a82'; ctx.fillRect(-14, -e.h+40, 28, 44);
-    // голова
-    ctx.fillStyle='#ffd7b3'; ctx.fillRect(-12, -e.h, 24, 24);
-    // колпак кондитера
-    ctx.fillStyle='#eaf2ff'; ctx.fillRect(-18, -e.h-8, 36, 10); ctx.fillRect(-12, -e.h-18, 24, 12);
-    // глаза
-    ctx.fillStyle='#0b1226'; ctx.fillRect(e.face>0?2:-8, -e.h+6, 4, 4);
-    // руки
-    ctx.fillStyle='#ffd7b3'; ctx.fillRect(-18, -e.h+42, 8, 16); ctx.fillRect(10, -e.h+42, 8, 16);
-    // ноги
-    ctx.fillStyle='#203b6f';
-    if (kick){
-      ctx.fillRect(e.face>0?10:-18, -16, 24*e.face, 8); // нога-удар
-    }else{
-      ctx.save(); ctx.translate(-6, -14); ctx.rotate(swing/30); ctx.fillRect(-4, 0, 8, 14); ctx.restore();
-      ctx.save(); ctx.translate(8, -14); ctx.rotate(-swing/30); ctx.fillRect(-4, 0, 8, 14); ctx.restore();
-    }
-    // сладкая крошка
-    ctx.fillStyle='#ffd36d'; ctx.fillRect(-2, -e.h+64, 4, 6);
-  }else{
-    // враги
-    if (e.type==='chef'){
-      ctx.fillStyle='#3a2b2b'; ctx.fillRect(-12, -e.h+20, 24, e.h-20);
-      ctx.fillStyle='#ffffff'; ctx.fillRect(-14, -e.h-10, 28, 14); // колпак
-      ctx.fillStyle='#ffd7b3'; ctx.fillRect(-10, -e.h, 20, 20); // лицо
-      ctx.fillStyle='#704b2a'; ctx.fillRect(10, -e.h+40, 12, 6); // скалка
-    }else if (e.type==='waiter'){
-      ctx.fillStyle='#1b3c4a'; ctx.fillRect(-11, -e.h+20, 22, e.h-20);
-      ctx.fillStyle='#ffd7b3'; ctx.fillRect(-10, -e.h, 20, 18);
-      ctx.fillStyle='#c0c9ff'; ctx.fillRect(8, -e.h+26, 20, 4); // поднос
-      ctx.beginPath(); ctx.arc(22, -e.h+24, 5, 0, Math.PI*2); ctx.fillStyle='#ffd36d'; ctx.fill();
-    }else if (e.type==='client'){
-      ctx.fillStyle='#42314a'; ctx.fillRect(-10, -e.h+20, 20, e.h-20);
-      ctx.fillStyle='#ffd7b3'; ctx.fillRect(-9, -e.h+2, 18, 18);
-      ctx.fillStyle='#8b9eff'; ctx.fillRect(10, -e.h+30, 10, 14); // смартфон
-    }else if (e.type==='boss'){
-      ctx.fillStyle='#2a2a4f'; ctx.fillRect(-e.w*0.35, -e.h+20, e.w*0.7, e.h-20);
-      ctx.fillStyle='#ffd7b3'; ctx.fillRect(-18, -e.h+2, 36, 26);
-      ctx.fillStyle='#ff4d7a'; ctx.fillRect(-e.w*0.35, -e.h+46, e.w*0.7, 10); // пояс-«наказ»
-      // папка/клипборд
-      ctx.fillStyle='#ffb37b'; ctx.fillRect(e.vx<0?(-e.w*0.35-16):(e.w*0.35), -e.h+54, 16, 20);
-    }
-    // полоска хп
-    const hpw = 40;
-    ctx.fillStyle='rgba(0,0,0,.35)'; ctx.fillRect(-hpw/2, -e.h-14, hpw, 6);
-    ctx.fillStyle=e.type==='boss'?'#ff6b6b':'#73f0ff';
-    ctx.fillRect(-hpw/2, -e.h-14, hpw*(e.hp/e.maxHp), 6);
-  }
-  ctx.restore();
-}
-
-/* ---------- Спавн волн ---------- */
-let spawnX = 400;
-
-function trySpawn(){
-  if (G.bossSpawned) return;
-  if (G.dist>380 && G.wave===1){ G.wave=2; toast('Волна 2: официанты вышли из теней'); }
-  if (G.dist>760 && G.wave===2){ G.wave=3; toast('Волна 3: клиенты недовольны счётом'); }
-  if (G.dist>1100 && !G.bossSpawned){ spawnBossEkaterina(G.camX + 900); toast('Босс: директор Екатерина в деле!'); }
-
-  while (spawnX < G.camX + G.width + 200){
-    const t = Math.random();
-    let type='chef';
-    if (G.wave>=2 && t>0.4) type='waiter';
-    if (G.wave>=3 && t>0.7) type='client';
-    spawnEnemy(type, spawnX + rand(80,250));
-    spawnX += rand(120,220);
-  }
-}
-
-/* ---------- Физика ---------- */
-function rectsOverlap(a,b){
-  return Math.abs(a.x - b.x) < (a.w*0.5 + b.w*0.5) &&
-         Math.abs(a.y - b.y) < (a.h*0.5 + b.h*0.5);
-}
-
-function damagePlayer(dmg){
-  if (player.inv>0 || G.gameOver) return;
-  player.hp = clamp(player.hp - dmg, 0, player.maxHp);
-  player.inv = 0.6; player.state='hurt'; sfx('hurt');
-  for(let i=0;i<5;i++) addParticle(player.x, player.y-20, '#ff6b6b');
-  if (player.hp<=0){ gameOver(false); }
-}
-
-function damageEnemy(e, dmg=18, kb=3){
-  e.hp -= dmg; e.vx -= kb * Math.sign(player.face);
-  for(let i=0;i<5;i++) addParticle(e.x, e.y-20, '#9affb1');
-  sfx('hit');
-  if (e.hp<=0){
-    addText(e.x, e.y-40, '+чаевые', '#ffd36d'); sfx('coin');
-    G.tips += 5 + Math.floor(Math.random()*4);
-    // смешные реплики
-    const lines={
-      chef:'Повар: «Ну и ладно, я кондитером хотел быть!»',
-      waiter:'Официант: «А можно без ног?»',
-      client:'Клиент: «Я отзыв напишу… но сначала полежу.»',
-      boss:'Екатерина: «С отпуском разберёмся позже…»'
-    };
-    logNews(lines[e.type]||'');
-    enemies.splice(enemies.indexOf(e),1);
-    if (e.type==='boss'){ gameOver(true); }
-  }
-}
-
-function logNews(t){ if(!t) return; addText(G.camX+360, 90, t, '#9affb1'); }
-
-function update(dt){
-  if (!G.started || G.paused || G.gameOver) return;
-
-  // время
-  G.t += dt; G.dist += Math.max(0, player.vx)*dt*0.2;
-
-  // габариты
-  G.width = canvas.clientWidth; G.height = canvas.clientHeight; G.ground = G.height-40;
-
-  // управление
-  const accel = 0.8, maxv = 3.2;
-  if (input.left)  player.vx = clamp(player.vx - accel, -maxv,  maxv), player.face=-1;
-  if (input.right) player.vx = clamp(player.vx + accel, -maxv,  maxv), player.face= 1;
-  if (!input.left && !input.right){ player.vx *= 0.85; if (Math.abs(player.vx)<0.01) player.vx=0; }
-
-  if (input.up && player.onGround){ player.vy = -7; player.onGround=false; }
-  if (input.attack && player.kickT<=0){ player.state='kick'; player.kickT=0.35; sfx('kick'); }
-
-  // физика игрока
-  player.vy += 0.35; // гравитация
-  player.x += player.vx*4;
-  player.y += player.vy*2;
-  if (player.y > G.ground){ player.y = G.ground; player.vy=0; player.onGround=true; }
-  if (player.inv>0) player.inv -= dt;
-  if (player.kickT>0){
-    player.kickT -= dt;
-    if (player.kickT<=0) player.state='idle';
-  } else if (!player.onGround) player.state='jump';
-  else if (Math.abs(player.vx)>0.2) player.state='run';
-  else player.state='idle';
-
-  // ограничение слева
-  if (player.x < G.camX + 40) player.x = G.camX + 40;
-
-  // камера
-  const targetCam = player.x - G.width*0.35;
-  G.camX += (targetCam - G.camX)*0.08;
-
-  // спавн
-  trySpawn();
-
-  // враги
-  for (const e of enemies){
-    // движение
-    e.vx = clamp(e.vx, -2.2, 0.6);
-    e.x += (e.vx - 0.1*Math.sign(e.x-player.x)); // чуть тянутся к игроку
-    e.y = G.ground;
-
-    // атаки
-    e.cd -= dt;
-    if (rectsOverlap({...player,w:player.w,h:player.h}, e)){
-      if (e.cd<=0){ e.cd=0.8; damagePlayer(e.dmg); addText(player.x, player.y-60, '-'+e.dmg, '#ff6b6b'); }
+    // Утилита отправки: имитация через mailto/fetch-хук — подмените на свой endpoint
+    async function fakeSubmit(formEl, msgEl, {to="sales@spring.example", subject="Новая заявка SPRING"}={}){
+      const data = Object.fromEntries(new FormData(formEl).entries());
+      // простая валидация
+      const invalid = [...formEl.querySelectorAll("[required]")].some(i=>!i.value.trim());
+      if(invalid){ msgEl.textContent = "Проверьте обязательные поля."; msgEl.style.color = "#ffb4ae"; return; }
+      msgEl.textContent = "Отправляем…";
+      msgEl.style.color = "#9fb0c9";
+      try{
+        // Если есть backend — замените этот блок на fetch('/api/lead', {method:'POST', body: JSON.stringify(data)})
+        const mailto = `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(JSON.stringify(data,null,2))}`;
+        window.location.href = mailto;
+        setTimeout(()=>{ msgEl.textContent = "Заявка сформирована. Мы на связи в течение 24 часов."; msgEl.style.color = "#bff7cf"; formEl.reset(); }, 600);
+      }catch(e){
+        msgEl.textContent = "Не удалось отправить. Попробуйте ещё раз или напишите нам на "+to;
+        msgEl.style.color = "#ffb4ae";
+      }
     }
 
-    // речь
-    e.talkT -= dt;
-    if (e.talkT<=0 && Math.random()<0.25){
-      e.talkT = rand(3,7);
-      const lines={
-        chef:['«Соль по вкусу, а ногой — по расписанию?»','«Это не по ГОСТу!»'],
-        waiter:['«Только не в поднос!»','«Скидку по ЗСу оформим?»'],
-        client:['«Где мой капучино на овсяном?»','«Я тут по фрилансу ем.»'],
-        boss:['«Отчёт на стол!»','«Кто съел греческий салат без согласования?»']
-      }[e.type]||['Эм…'];
-      addText(e.x, e.y- e.h - 24, lines[Math.floor(Math.random()*lines.length)], '#c6d6f5');
-    }
-  }
-
-  // столкновение удара ногой
-  if (player.state==='kick'){
-    const foot = {x:player.x + player.face*30, y:player.y-20, w:26, h:20};
-    for (const e of [...enemies]){
-      if (rectsOverlap(foot,e)){ damageEnemy(e, e.type==='boss'?12:22, 4); }
-    }
-  }
-
-  // частицы/тексты
-  for (const p of particles){ p.x+=p.vx*2; p.y+=p.vy*2; p.vy+=0.1; p.life-=dt*0.9; }
-  for (const t of texts){ t.y-=0.3; t.life-=dt*0.5; }
-  while(particles.length && particles[0].life<=0) particles.shift();
-  while(texts.length && texts[0].life<=0) texts.shift();
-
-  // UI
-  document.getElementById('hpbar').style.width = (player.hp/player.maxHp*100)+'%';
-  document.getElementById('dist').textContent = Math.floor(G.dist)+'м';
-  document.getElementById('tips').textContent = G.tips;
-  document.getElementById('wave').textContent = G.wave;
-}
-
-/* ---------- Рендер ---------- */
-function render(){
-  ctx.clearRect(0,0,canvas.clientWidth,canvas.clientHeight);
-  drawBackground();
-
-  // сущности
-  for (const e of enemies) drawEntity(e);
-  drawEntity(player);
-
-  // частицы
-  for (const p of particles){
-    ctx.globalAlpha = Math.max(0, p.life);
-    ctx.fillStyle = p.col || '#9affb1'; ctx.fillRect(p.x-G.camX, p.y, 4,4);
-    ctx.globalAlpha = 1;
-  }
-  // всплывающие тексты
-  ctx.font='bold 14px system-ui'; ctx.textBaseline='middle';
-  for (const t of texts){
-    ctx.globalAlpha = Math.max(0, t.life);
-    ctx.fillStyle=t.col; ctx.fillText(t.msg, t.x-G.camX, t.y);
-    ctx.globalAlpha=1;
-  }
-
-  // хитбокс удара (мигнём)
-  if (player.state==='kick' && player.kickT>0.15){
-    const x = player.x + player.face*30, y = player.y-20;
-    ctx.globalAlpha=0.25; ctx.fillStyle='#9affb1'; ctx.fillRect(x-13-G.camX, y-10, 26, 20); ctx.globalAlpha=1;
-  }
-}
-
-/* ---------- Игровой цикл ---------- */
-let last=performance.now();
-function loop(now){
-  const dt = Math.min(0.033, (now-last)/1000); last=now;
-  G.dt=dt;
-  update(dt);
-  render();
-  requestAnimationFrame(loop);
-}
-requestAnimationFrame(loop);
-
-/* ---------- Вспомогательное ---------- */
-function gameOver(win){
-  if (G.gameOver) return;
-  G.gameOver=true; G.win=win;
-  const modal = document.getElementById('modal');
-  const t = document.getElementById('m-title'), m=document.getElementById('m-text');
-  if (win){
-    t.textContent='ПОБЕДА! Екатерина отступила 🧁👠';
-    m.innerHTML=`Ты прошёл кухню GREKO. Чаевых: <b>${G.tips}</b>, дистанция: <b>${Math.floor(G.dist)}м</b>.
-                 <br>Екатерина пообещала пересмотреть KPI и выдать премию «За силу ног».`;
-    sfx('win'); confetti();
-  }else{
-    t.textContent='Проигрыш — тебя уволили 🧾';
-    m.innerHTML=`Здоровье закончилось. Но дух кондитера вечен. <br>Чаевые: <b>${G.tips}</b>, волна: <b>${G.wave}</b>.`;
-  }
-  modal.style.display='grid';
-}
-
-function startGame(){
-  document.getElementById('modal').style.display='none';
-  G.started=true; G.paused=false; G.gameOver=false; G.win=false;
-  // сброс
-  enemies.length=0; particles.length=0; texts.length=0; G.camX=0; G.dist=0; G.tips=0; G.wave=1; G.bossSpawned=false; spawnX=400;
-  Object.assign(player,{x:60,y:0,vx:0,vy:0,face:1,onGround:false,hp:100,inv:0,state:'idle',kickT:0});
-  // начальная пачка врагов
-  for(let i=0;i<4;i++) spawnEnemy(['chef','waiter','client'][i%3], 380+i*160);
-}
-
-function pauseToggle(){
-  if(!G.started||G.gameOver) return;
-  G.paused=!G.paused;
-  document.getElementById('btn-pause').textContent = G.paused?'Продолжить':'Пауза';
-}
-
-function confetti(n=80){
-  for(let i=0;i<n;i++){
-    const s=document.createElement('div');
-    Object.assign(s.style,{
-      position:'fixed', left:(Math.random()*100)+'%', top:'-10px',
-      width:'6px', height:'10px', background:['#73f0ff','#9affb1','#ffd36d','#ff9b7c'][i%4],
-      transform:`rotate(${Math.random()*360}deg)`, borderRadius:'2px', zIndex:9999,
-      transition:'transform 1.2s linear, top 1.2s linear, opacity 1.2s'
+    document.getElementById('leadForm')?.addEventListener('submit', e=>{
+      e.preventDefault();
+      fakeSubmit(e.currentTarget, document.getElementById('leadMsg'), {subject:"Запрос сметы / лид"});
     });
-    document.body.appendChild(s);
-    requestAnimationFrame(()=>{
-      s.style.top='110%'; s.style.transform=`translateY(90vh) rotate(${720+Math.random()*720}deg)`; s.style.opacity=0.85;
+
+    document.getElementById('supForm')?.addEventListener('submit', e=>{
+      e.preventDefault();
+      fakeSubmit(e.currentTarget, document.getElementById('supMsg'), {subject:"Поставщик / фабрика"});
     });
-    setTimeout(()=>s.remove(),1300);
-  }
-}
-
-/* ---------- События ввода ---------- */
-window.addEventListener('keydown', e=>{
-  if (e.repeat) return;
-  if (e.code==='ArrowLeft'||e.code==='KeyA') input.left=true;
-  if (e.code==='ArrowRight'||e.code==='KeyD') input.right=true;
-  if (e.code==='ArrowUp'||e.code==='KeyW') input.up=true;
-  if (e.code==='Space'){ e.preventDefault(); input.attack=true; }
-  if (e.code==='KeyP') pauseToggle();
-});
-window.addEventListener('keyup', e=>{
-  if (e.code==='ArrowLeft'||e.code==='KeyA') input.left=false;
-  if (e.code==='ArrowRight'||e.code==='KeyD') input.right=false;
-  if (e.code==='ArrowUp'||e.code==='KeyW') input.up=false;
-  if (e.code==='Space') input.attack=false;
-});
-
-function bindTouch(id, key){
-  const el=document.getElementById(id);
-  const down=()=>{ input[key]=true; el.style.filter='brightness(1.2)'; };
-  const up=()=>{ input[key]=false; el.style.filter=''; };
-  ['pointerdown','touchstart','mousedown'].forEach(ev=>el.addEventListener(ev,down));
-  ['pointerup','pointerleave','touchend','mouseup','touchcancel'].forEach(ev=>el.addEventListener(ev,up));
-}
-bindTouch('mv-left','left'); bindTouch('mv-right','right'); bindTouch('mv-jump','up'); bindTouch('mv-kick','attack');
-
-/* ---------- Кнопки UI ---------- */
-document.getElementById('btn-start').onclick=()=>{ startGame(); toast('Поехали! Удар ногой — Space'); };
-document.getElementById('btn-restart').onclick=()=>startGame();
-document.getElementById('btn-pause').onclick=pauseToggle;
-document.getElementById('m-go').onclick=()=>{ startGame(); };
-document.getElementById('m-close').onclick=()=>{ document.getElementById('modal').style.display='none'; };
-
-/* Показать приветствие */
-document.getElementById('modal').style.display='grid';
-</script>
+  </script>
 </body>
 </html>
